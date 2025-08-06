@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  guest_name: MyString
+  guest_email: MyString
+  date_time: 2025-08-06 15:04:44
+  status: MyString
+  service: one
+
+two:
+  guest_name: MyString
+  guest_email: MyString
+  date_time: 2025-08-06 15:04:44
+  status: MyString
+  service: two
