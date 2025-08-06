@@ -1,6 +1,7 @@
 class ServicesController < ApplicationController
     include Authenticable 
 
+
     before_action :authenticate_user!, only: [:create]
 
     def index

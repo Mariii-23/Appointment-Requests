@@ -4,16 +4,26 @@ NUMBER_OF_NUTRITIONISTS = 10
 MIN_PRICE_CENTS = 25
 MAX_PRICE_CENTS = 150
 DEFAULT_PASSWORD = '123456789'
-NUMBER_OF_APPOINTMENTS = 20
+APPOINTMENTS_PER_SERVICE = 2
 APPOINTMENT_STATUSES = ['pending', 'confirmed', 'canceled']
 
 ActiveRecord::Base.transaction do
     puts "Creating fixed admin nutritionist..."
 
-    Nutritionist.find_or_create_by!(email: 'admin@example.com') do |nutritionist|
+     admin = Nutritionist.find_or_create_by!(email: 'admin@admin.com') do |nutritionist|
       nutritionist.name = 'Admin Admin'
       nutritionist.password = DEFAULT_PASSWORD
       nutritionist.password_confirmation = DEFAULT_PASSWORD
+    end
+
+    puts "Creating 3 fixed services for admin nutritionist..."
+
+    (3 - admin.services.count).times do
+        admin.services.create!(
+          name: Faker::Commerce.product_name,
+          price_euros: rand(MIN_PRICE_CENTS..MAX_PRICE_CENTS),
+          location: Faker::Address.city
+        )
     end
 
     puts "Creating random nutritionists and services..."
@@ -35,19 +45,18 @@ ActiveRecord::Base.transaction do
       end
     end
 
-    puts "Creating some random appointments..."
+    puts "Creating fixed number of appointments per service..."
 
-    services = Service.all
-
-    NUMBER_OF_APPOINTMENTS.times do
-      service = services.sample
-      Appointment.create!(
-        guest_name: Faker::Name.name,
-        guest_email: Faker::Internet.email,
-        date_time: Faker::Time.forward(days: 30, period: :day),
-        status: 'pending', #APPOINTMENT_STATUSES.sample,
-        service: service
-      )
+    Service.find_each do |service|
+      APPOINTMENTS_PER_SERVICE.times do
+        Appointment.create!(
+          guest_name: Faker::Name.name,
+          guest_email: Faker::Internet.email,
+          date_time: Faker::Time.forward(days: 30, period: :day),
+          status: 'pending',
+          service: service
+        )
+      end
     end
 
     puts "Seed process completed!"

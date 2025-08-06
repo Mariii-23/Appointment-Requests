@@ -2,14 +2,28 @@ class AppointmentsController < ApplicationController
   include Authenticable
 
   before_action :set_appointment, only: [:update, :update_status]
-  before_action :authenticate_user!, only: [:update, :update_status]
+  before_action :authenticate_user!, only: [:update, :update_status, :index, :show]
 
   def index
-    @appointments = Appointment.all
+    @appointments = Appointment.joins(:service)
+                               .where(services: { nutritionist_id: current_user.id })
     render json: @appointments
+  end
+  
+  def show
+    @appointment = Appointment.joins(:service)
+                               .where(services: { nutritionist_id: current_user.id })
+                               .find_by(id: params[:id])
+  
+    if @appointment
+      render json: @appointment
+    else
+      render json: { error: "Appointment not found" }, status: :not_found
+    end
   end
 
   def create
+    #TODO: Verificar se existe o servico
     @appointment = Appointment.new(appointment_params)
     @appointment.status = "pending"
     if @appointment.save
@@ -20,9 +34,7 @@ class AppointmentsController < ApplicationController
   end
 
   def update
-    safe_params = appointment_update_params.except(:status)
-
-    if @appointment.update(safe_params)
+    if @appointment.update(appointment_update_params)
       render json: @appointment
     else
       render json: { errors: @appointment.errors.full_messages }, status: :unprocessable_entity
@@ -60,7 +72,11 @@ class AppointmentsController < ApplicationController
   end
 
   def appointment_update_params
-    params.require(:appointment).permit(:guest_name, :guest_email, :date_time, :service_id, :status)
+    params.require(:appointment).permit(:guest_name, :guest_email, :date_time)
+  end
+
+  def appointment_create_params
+    params.require(:appointment).permit(:guest_name, :guest_email, :date_time, :service_id)
   end
 
   def reject_conflicting_appointments(appointment)

@@ -1,6 +1,4 @@
 class AuthenticationController < ApplicationController
-  # skip_before_action :authenticate_user!, only: [:login]
-
     def login
       @nutritionist = Nutritionist.find_by(email: params[:email])
       if @nutritionist&.authenticate(params[:password])

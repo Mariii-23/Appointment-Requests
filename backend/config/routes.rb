@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
   resources :services, only: [:index, :show, :create]
 
-  resources :appointments, only: [:create, :index, :update] do
+  resources :appointments, only: [:create, :index, :update, :show] do
     member do
       patch :update_status
     end

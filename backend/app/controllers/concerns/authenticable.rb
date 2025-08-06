@@ -7,6 +7,8 @@ module Authenticable
 
   def authenticate_user!
     token = request.headers['Authorization']&.split(' ')&.last
+    Rails.logger.info "Auth token received: #{token.inspect}"
+
     if token.blank?
       render json: { error: 'Token missing' }, status: :unauthorized
       return
@@ -14,6 +16,7 @@ module Authenticable
 
     begin
       payload = JWT.decode(token, Rails.application.credentials.jwt_secret, true, algorithm: 'HS256')[0]
+      Rails.logger.info "Payload: #{payload}"
       @current_user = Nutritionist.find(payload['nutritionist_id'])
     rescue JWT::DecodeError, ActiveRecord::RecordNotFound
       render json: { error: 'Invalid token' }, status: :unauthorized
