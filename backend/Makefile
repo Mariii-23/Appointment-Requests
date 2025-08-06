@@ -11,3 +11,6 @@ db-logs:
 
 db-create:
 	rails db:create
+
+db-seed:
+	rails db:seed

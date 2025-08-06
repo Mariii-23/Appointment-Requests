@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
+  post '/login', to: 'authentication#login'
+  post '/logout', to: 'authentication#logout'
+
   resources :nutritionists, only: [:index, :show] do
     collection do
       get 'search'
