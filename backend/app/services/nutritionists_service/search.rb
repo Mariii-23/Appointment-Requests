@@ -16,27 +16,19 @@ module NutritionistsService
                                   .distinct
 
       paginator = Pagination.new(base_relation, page: @page, per_page: @per_page)
+      data = paginator.result[:data]
 
-      if paginator.result[:data].present?
-        data = paginator.result[:data]
-
-        # Se o cliente pediu os serviços, carregamos com preload
-        if @include_services
-          data = data.includes(:services).map do |nutritionist|
-            nutritionist.as_json.merge(
-              services: nutritionist.services
-                      .limit(@services_limit)
-                      .map { |s| s.slice(:id, :name, :price_euros, :location) }
-            )
-          end
+      if @include_services
+        data = data.includes(:services).map do |nutritionist|
+          nutritionist.as_json.merge(
+            services: nutritionist.services
+                    .limit(@services_limit)
+                    .map { |s| s.slice(:id, :name, :price_euros, :location) }
+          )
         end
-
-        Result.ok(
-          paginator.result.merge(data: data)
-        )
-      else
-        Result.errors([FAILED_TO_FETCH])
       end
+
+      Result.ok(paginator.result.merge(data: data))
     rescue => e
       Rails.logger.error("NutritionistsService::Search failed: #{e.message}")
       Result.errors([SOMETHING_WENT_WRONG])

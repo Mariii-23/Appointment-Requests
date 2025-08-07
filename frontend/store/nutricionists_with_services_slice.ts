@@ -89,9 +89,9 @@ const nutritionistsSlice = createSlice({
             state.loading = false;
         },
     },
-    extraReducers: (builder) => {
+    extraReducers: builder => {
         builder
-            .addCase(fetchNutritionists.pending, (state) => {
+            .addCase(fetchNutritionists.pending, state => {
                 state.loading = true;
                 state.error = null;
             })

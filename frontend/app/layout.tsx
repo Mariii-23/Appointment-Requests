@@ -4,23 +4,23 @@ import Navbar from "@/components/navbar";
 import StoreProvider from "./providers/store-provider";
 
 export const metadata: Metadata = {
-  title: 'Appointment Requests',
-  description: 'Nutritionist appointment app',
-}
+    title: "Appointment Requests",
+    description: "Nutritionist appointment app",
+};
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body>
-        <StoreProvider>
-          <Navbar />
-          {children}
-        </StoreProvider>
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <body>
+                <StoreProvider>
+                    <Navbar />
+                    {children}
+                </StoreProvider>
+            </body>
+        </html>
+    );
 }

@@ -9,24 +9,23 @@ const initialState: AuthState = {
     error: null,
 };
 
-export const login = createAsyncThunk<
-    LoginResponse,
-    LoginPayload,
-    { rejectValue: string }
->("auth/login", async (payload, thunkAPI) => {
-    try {
-        const response = await api.post("/login", payload);
-        if (response.data.isSuccess && response.data.result) {
-            return response.data.result as LoginResponse;
+export const login = createAsyncThunk<LoginResponse, LoginPayload, { rejectValue: string }>(
+    "auth/login",
+    async (payload, thunkAPI) => {
+        try {
+            const response = await api.post("/login", payload);
+            if (response.data.isSuccess && response.data.result) {
+                return response.data.result as LoginResponse;
+            }
+            return thunkAPI.rejectWithValue("Login failed");
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                return thunkAPI.rejectWithValue(error.message);
+            }
+            return thunkAPI.rejectWithValue("Unknown error occurred");
         }
-        return thunkAPI.rejectWithValue("Login failed");
-    } catch (error: unknown) {
-        if (error instanceof Error) {
-            return thunkAPI.rejectWithValue(error.message);
-        }
-        return thunkAPI.rejectWithValue("Unknown error occurred");
-    }
-});
+    },
+);
 
 const authSlice = createSlice({
     name: "auth",
@@ -39,9 +38,9 @@ const authSlice = createSlice({
             state.loading = false;
         },
     },
-    extraReducers: (builder) => {
+    extraReducers: builder => {
         builder
-            .addCase(login.pending, (state) => {
+            .addCase(login.pending, state => {
                 state.loading = true;
                 state.error = null;
             })
