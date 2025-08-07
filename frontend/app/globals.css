@@ -1,0 +1,56 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --color-primary-green: #1ab394;
+  --color-secondary-green: #14ad9a;
+  --color-terciary-green: #2ed080;
+
+  --color-coral: #F2987F;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+
+  --color-primary-green: #1ab394;
+  --color-secondary-green: #14ad9a;
+  --color-terciary-green: #2ed080;
+  --color-coral: #F2987F;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  h1 {
+    @apply text-primary-green;
+  }
+}
+
+@utility btn {
+  @apply rounded-md;
+}
+
+@utility btn-primary {
+  @apply bg-[var(--color-primary-green)] text-white hover:bg-[var(--color-secondary-green)]  border border-[var(--color-secondary-green)] ;
+}
+
+@utility btn-secondary {
+  @apply bg-[var(--color-coral)] text-white hover:bg-orange-400;
+}
