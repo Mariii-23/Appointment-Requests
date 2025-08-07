@@ -1,19 +1,24 @@
 class NutritionistsController < ApplicationController
-    def index
-        @nutritionists = Nutritionist.all
-        render json: @nutritionists
-    end
+  include ResponseHandler
 
-    def show
-      @nutritionist = Nutritionist.find(params[:id])
-      render json: @nutritionist
-    end
+  def index
+    page = params[:page]
+    per_page = params[:per_page]
 
-    def search
-        query = params[:nutritionistOrService]
-        @nutritionists = Nutritionist.joins(:services)
-                                     .where("nutritionists.name ILIKE ? OR services.name ILIKE ?", "%#{query}%", "%#{query}%")
-                                     .distinct
-        render json: @nutritionists
-    end
+    result = NutritionistsService::List.call(page: page, per_page: per_page)
+    render_result(result)
+  end
+
+  def show
+    result = NutritionistsService::Show.call(params[:id])
+    render_result(result)
+  end
+
+  def search
+    page = params[:page]
+    per_page = params[:per_page]
+
+    result = NutritionistsService::Search.call(params[:nutritionistOrService], page: page, per_page: per_page)
+    render_result(result)
+  end
 end
