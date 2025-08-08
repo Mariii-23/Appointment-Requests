@@ -19,10 +19,12 @@ class NutritionistsController < ApplicationController
     per_page = params[:per_page]
     include_services = ActiveModel::Type::Boolean.new.cast(params[:include_services])
     services_limit = (params[:services_limit] || 10).to_i
-    search = params[:search]
+    nutritionistOrServiceName = params[:nutritionist_or_service_name]
+    location = params[:location]
 
     result = NutritionistsService::Search.call(
-      search: search,
+      nutritionistOrServiceName: nutritionistOrServiceName,
+      location: location,
       page: page,
       per_page: per_page,
       include_services: include_services,

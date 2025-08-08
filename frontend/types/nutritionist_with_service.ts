@@ -1,11 +1,8 @@
+import { Service } from "./service";
+
 export interface NutritionistWithServices {
-    id: number;
+    id: string;
     name: string;
     email?: string;
-    services: {
-        id: number;
-        name: string;
-        price_euros: number;
-        location: string;
-    }[];
+    services: Service[];
 }

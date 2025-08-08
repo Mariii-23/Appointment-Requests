@@ -7,64 +7,80 @@ import Paginator from "@/components/paginator";
 import { NutritionistWithServices } from "@/types/nutritionist_with_service";
 import { AppDispatch, RootState } from "@/store";
 import NutritionistWithServicesCards from "@/components/cards/nutritionit_with_service_cards";
+import NutritionistServiceSearch from "@/components/nutritionist_service_search";
+import BannerLayout from "./layouts/banner-layout";
+import BodyLayout from "./layouts/body-layout";
 
 export default function Home() {
-    const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
 
-    const [search, setSearch] = useState("");
-    const [perPage, setPerPage] = useState(2);
-    const [page, setPage] = useState(1);
+  const perPage = 2;
 
-    // Aqui acessa direto a página no cache
-    const pageKey = makePageKey({ search, page, per_page: perPage });
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [location, setLocation] = useState("");
+  
+  const [pageKey, setPageKey] = useState(
+    makePageKey({ nutritionistOrServiceName: search, location, page, per_page: perPage })
+  );
 
-    const currentPageData = useSelector(
-        (state: RootState) => state.nutritionists.cache?.[pageKey] ?? null,
+  useEffect(() => {
+    setPageKey(makePageKey({ nutritionistOrServiceName: search, location, page, per_page: perPage }));
+  }, [search, location, page]);
+
+  const currentPageData = useSelector(
+    (state: RootState) => state.nutritionists.cache?.[pageKey] ?? null
+  );
+
+  const loading = useSelector((state: RootState) => state.nutritionists.loading);
+  const error = useSelector((state: RootState) => state.nutritionists.error);
+
+  useEffect(() => {
+    dispatch(
+      fetchNutritionists({
+        nutritionistOrServiceName: search,
+        location,
+        page,
+        per_page: perPage,
+      })
     );
+  }, [dispatch, pageKey, search, location, page, perPage]);
 
-    const nutritionistsState = useSelector((state: RootState) => state.nutritionists);
-    console.log("Nutritionists State", nutritionistsState);
+  const onSearch = (newSearch: string, newLocation: string) => {
+    setSearch(newSearch);
+    setLocation(newLocation);
+    setPage(1); 
+  };
 
-    const loading = useSelector((state: RootState) => state.nutritionists.loading);
-    const error = useSelector((state: RootState) => state.nutritionists.error);
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
 
-    // Só faz fetch quando algo muda (search, page, perPage)
-    useEffect(() => {
-        dispatch(fetchNutritionists({ search, page, per_page: perPage }));
-    }, [search, page, perPage, dispatch]);
+  return (
+    <>
+    <BannerLayout>
+        <NutritionistServiceSearch onSearch={onSearch} />
+    </BannerLayout>
+    <BodyLayout>
 
-    const handlePageChange = (newPage: number) => {
-        setPage(newPage);
-    };
+      {loading && <div>Loading...</div>}
+      {error && <div className="text-red-600">Error: {error}</div>}
 
-    return (
-        <div className="p-6">
-            <input
-                type="text"
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                placeholder="Search nutritionists or services"
-                className="input input-bordered w-full max-w-xs mb-4"
+      {currentPageData && (
+        <>
+          <NutritionistWithServicesCards
+            nutritionists={currentPageData.data as NutritionistWithServices[]}
+          />
+
+          {currentPageData.meta.total_pages > 1 && (
+            <Paginator
+              totalPages={currentPageData.meta.total_pages}
+              currentPage={page}
+              onClickPage={handlePageChange}
             />
-
-            {loading && <div>Loading...</div>}
-            {error && <div className="text-red-600">Error: {error}</div>}
-
-            {currentPageData && (
-                <>
-                    <NutritionistWithServicesCards
-                        nutritionists={currentPageData.data as NutritionistWithServices[]}
-                    />
-
-                    {currentPageData.meta.total_pages > 1 && (
-                        <Paginator
-                            totalPages={currentPageData.meta.total_pages}
-                            currentPage={page}
-                            onClickPage={handlePageChange}
-                        />
-                    )}
-                </>
-            )}
-        </div>
-    );
+          )}
+        </>
+      )}</BodyLayout>
+    </>
+  );
 }

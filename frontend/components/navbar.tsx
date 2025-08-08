@@ -44,7 +44,7 @@ export default function Navbar() {
             ) : (
                 <div className="flex items-center space-x-4 text-white text-sm">
                     <span>Welcome, {nutritionist.name}</span>
-                    <button className="btn btn-secondary" onClick={handleLogout}>
+                    <button className="btn btn-terciary" onClick={handleLogout}>
                         Logout
                     </button>
                 </div>

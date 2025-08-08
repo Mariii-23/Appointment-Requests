@@ -2,8 +2,9 @@ module NutritionistsService
   class Search
     include NutritionistsService::Errors
 
-    def initialize(search:, page: nil, per_page: nil, include_services: false, services_limit: 10)
-      @search = search
+    def initialize(nutritionistOrServiceName:, location: nil, page: nil, per_page: nil, include_services: false, services_limit: 10)
+      @query = nutritionistOrServiceName
+      @location = location
       @page = (page || 1).to_i
       @per_page = (per_page || 10).to_i
       @include_services = include_services
@@ -12,31 +13,51 @@ module NutritionistsService
 
     def call
       base_relation = Nutritionist.joins(:services)
-                                  .where("nutritionists.name ILIKE :q OR services.name ILIKE :q", q: "%#{@search}%")
-                                  .distinct
 
-      paginator = Pagination.new(base_relation, page: @page, per_page: @per_page)
-      data = paginator.result[:data]
-
-      if @include_services
-        data = data.includes(:services).map do |nutritionist|
-          nutritionist.as_json.merge(
-            services: nutritionist.services
-                    .limit(@services_limit)
-                    .map { |s| s.slice(:id, :name, :price_euros, :location) }
-          )
-        end
+      if @query.present?
+        base_relation = base_relation.where("nutritionists.name ILIKE :q OR services.name ILIKE :q", q: "%#{@query}%")
       end
 
-      Result.ok(paginator.result.merge(data: data))
+      base_relation = base_relation.distinct
+
+      paginator = Pagination.new(base_relation, page: @page, per_page: @per_page)
+      nutritionists = paginator.result[:data]
+
+      if @include_services
+        nutritionists = nutritionists.map do |nutritionist|
+          if @query.present?
+            if nutritionist.name.downcase.include?(@query.downcase)
+              services_scope = nutritionist.services
+              services_scope = services_scope.where("services.location ILIKE ?", "%#{@location}%") if @location.present?
+            else
+              services_scope = nutritionist.services.where("services.name ILIKE ?", "%#{@query}%")
+              services_scope = services_scope.where("services.location ILIKE ?", "%#{@location}%") if @location.present?
+            end
+          else
+            services_scope = nutritionist.services
+            services_scope = services_scope.where("services.location ILIKE ?", "%#{@location}%") if @location.present?
+          end
+        
+          services = services_scope.limit(@services_limit)
+        
+          nutritionist.as_json.merge(
+            services: services.map { |s| s.slice(:id, :name, :price_euros, :location) }
+          )
+        end
+      
+        nutritionists = nutritionists.select { |n| n[:services].any? }
+      end
+
+      Result.ok(paginator.result.merge(data: nutritionists))
     rescue => e
       Rails.logger.error("NutritionistsService::Search failed: #{e.message}")
       Result.errors([SOMETHING_WENT_WRONG])
     end
 
-    def self.call(search:, page: nil, per_page: nil, include_services: false, services_limit: 10)
+    def self.call(nutritionistOrServiceName:, location: nil, page: nil, per_page: nil, include_services: false, services_limit: 10)
       new(
-        search: search,
+        nutritionistOrServiceName: nutritionistOrServiceName,
+        location: location,
         page: page,
         per_page: per_page,
         include_services: include_services,

@@ -23,16 +23,20 @@ const initialState: NutritionistsState = {
     error: null,
 };
 
-function makePageKey(params: { search: string; page: number; per_page: number }) {
-    return `search=${params.search || ""}&per_page=${params.per_page}&page=${params.page}`;
+interface FetchNutritionistsParams {
+    nutritionistOrServiceName: string; page: number; per_page: number, location: string
+}
+
+function makePageKey(params: FetchNutritionistsParams) {
+    return `location=${params.location || ""}&nutritionistOrServiceName=${params.nutritionistOrServiceName || ""}&per_page=${params.per_page}&page=${params.page}`;
 }
 
 export const fetchNutritionists = createAsyncThunk<
     { data: NutritionistWithServices[]; meta: MetaData; pageKey: string },
-    { search: string; page: number; per_page: number },
+    FetchNutritionistsParams,
     { rejectValue: string }
 >("nutritionists/fetch", async (params, thunkAPI) => {
-    const { search, page, per_page } = params;
+    const { location, nutritionistOrServiceName, page, per_page } = params;
     const pageKey = makePageKey(params);
 
     const state = thunkAPI.getState() as { nutritionists: NutritionistsState };
@@ -49,7 +53,8 @@ export const fetchNutritionists = createAsyncThunk<
     try {
         const res = await api.get(PATHS.NUTRICIONISTS_BY_FILTER, {
             params: {
-                search,
+                location,
+                nutritionist_or_service_name: nutritionistOrServiceName,
                 page,
                 per_page,
                 include_services: true,

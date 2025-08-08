@@ -2,6 +2,9 @@
 
 import { NutritionistWithServices } from "@/types/nutritionist_with_service";
 import React from "react";
+import Avatar from "../avatar";
+import StarIcon from "../icons/star-icon";
+import ServicesDisplay from "../services_display";
 
 type NutritionistCardProps = NutritionistWithServices;
 
@@ -13,22 +16,30 @@ const NutritionistWithServiceCard: React.FC<NutritionistCardProps> = ({
 }) => {
     return (
         <div key={id} className="card bg-base-100 w-96 shadow-sm w-full">
-            <div className="card-body">
-                <h2 className="card-title">{name}</h2>
-                {email && <p>{email}</p>}
+            <div className="card-body flex flex-colom gap-4 w-full">
+                <div className="flex flex-row justify-between w-full">
+                    <div className="flex flex-colom gap-8">
+                        <div>
+                            <Avatar name={name}/>
+                        </div>
+                        <div  className="flex flex-col w-full gap-2">
+                                <div className="badge p-2 badge-primary flex items-center gap-2"> 
+                                    <StarIcon size={24}/>
+                                    <span>FOLLOW-UP</span>
+                                </div>
+                                <h2 className="card-title">{name}</h2>
+                                {email && <p>{email}</p>}
+                        </div>
+                    </div>
 
-                <h3 className="font-semibold mt-2">Services:</h3>
-                <ul className="list-disc list-inside">
-                    {services.map(service => (
-                        <li key={service.id}>
-                            {service.name} - €{service.price_euros} ({service.location})
-                        </li>
-                    ))}
-                </ul>
+                    <div className="card-actions justify-between w-100">
+                        <button className="btn btn-secondary-card btn-sm w-full">Schedule appointment</button>
+                        <button className="btn btn-primary-card btn-sm w-full">Website</button>
+                    </div>
+                </div>
 
-                <div className="card-actions justify-end mt-4">
-                    <button className="btn btn-primary btn-sm">Book Appointment</button>
-                    <button className="btn btn-outline btn-sm">Website</button>
+                    <div className="justify-center items-center pl-[5%] pr-[10%] sm:pl-[8%] sm:pr-[20%]">
+                  <ServicesDisplay services={services} />
                 </div>
             </div>
         </div>
