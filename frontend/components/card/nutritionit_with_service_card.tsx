@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import Avatar from "../avatar";
 import StarIcon from "../icons/star-icon";
 import ServicesDisplay from "../services_display";
+import CardLayout from "@/app/layouts/card-layout";
 
 interface NutritionistCardProps extends NutritionistWithServices {
     onClickScheduleAppointmentHandler: (nutricionId: string, service_id: string) => void;
@@ -26,8 +27,7 @@ const NutritionistWithServiceCard: React.FC<NutritionistCardProps> = ({
     };
 
     return (
-        <div key={id} className="card bg-base-100 w-96 shadow-sm w-full">
-            <div className="card-body flex flex-colom gap-4 w-full">
+                <CardLayout>
                 <div className="flex flex-row justify-between w-full">
                     <div className="flex flex-colom gap-8">
                         <div>
@@ -62,8 +62,7 @@ const NutritionistWithServiceCard: React.FC<NutritionistCardProps> = ({
                 <div className="justify-center items-center pl-[5%] pr-[10%] sm:pl-[8%] sm:pr-[20%]">
                     <ServicesDisplay services={services} onServiceChange={handleServiceChange} />
                 </div>
-            </div>
-        </div>
+            </CardLayout>
     );
 };
 

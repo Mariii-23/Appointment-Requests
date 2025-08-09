@@ -1,4 +1,5 @@
 import React, { forwardRef } from "react";
+import CloseIcon from "./icons/close-icon";
 
 type ModalProps = {
     title: string;
@@ -16,7 +17,7 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(({ title, onClose, child
                         className="btn btn-sm btn-circle btn-ghost"
                         onClick={onClose}
                     >
-                        ✕
+                        <CloseIcon/>
                     </button>
                 </form>
 

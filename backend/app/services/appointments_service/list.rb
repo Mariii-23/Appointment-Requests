@@ -10,6 +10,7 @@ module AppointmentsService
       # Build the base query
       base_relation = Appointment.joins(:service)
                                  .where(services: { nutritionist_id: @nutritionist_id })
+                                 .order(created_at: :desc)
     
       # Apply pagination
       paginator = Pagination.new(base_relation, page: @page, per_page: @per_page)

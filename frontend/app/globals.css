@@ -2,7 +2,7 @@
 @plugin "daisyui";
 
 :root {
-    --background: #ffffff;
+    --background: #f9f9fa;
     --foreground: #171717;
 }
 
@@ -28,18 +28,18 @@
         --background: #0a0a0a;
         --foreground: #ededed;
 
-        --color-primary-green: #1ab394;
+        /* --color-primary-green: #1ab394;
         --color-primary-green-rgb: 0, 122, 51;
 
         --color-secondary-green: #14ad9a;
         --color-terciary-green: #2ed080;
         --color-bg-green: #ddf9ef;
         --color-coral: #f2987f;
-        --color-blue: #5db4ec;
+        --color-blue: #5db4ec; */
     }
 }
 
-body {
+.body {
     background: var(--background);
     color: var(--foreground);
     font-family: Arial, Helvetica, sans-serif;

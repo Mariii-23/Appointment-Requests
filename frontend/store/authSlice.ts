@@ -36,6 +36,8 @@ const authSlice = createSlice({
             state.nutritionist = null;
             state.error = null;
             state.loading = false;
+
+            localStorage.removeItem("token");
         },
     },
     extraReducers: builder => {
@@ -48,6 +50,8 @@ const authSlice = createSlice({
                 state.loading = false;
                 state.token = action.payload.token;
                 state.nutritionist = action.payload.nutritionist;
+
+                localStorage.setItem("token", action.payload.token);
             })
             .addCase(login.rejected, (state, action) => {
                 state.loading = false;
