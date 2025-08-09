@@ -19,7 +19,7 @@ class AppointmentsController < ApplicationController
   end
 
   def create
-    result = AppointmentsService::Create.call(appointment_create_params)
+    result = AppointmentsService::Create.call(params[:nutritionist_id],appointment_create_params)
     render_result(result, success_status: :created)
   end
 

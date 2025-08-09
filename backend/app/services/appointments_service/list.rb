@@ -25,7 +25,6 @@ module AppointmentsService
       Result.errors([AppointmentsService::Errors::SOMETHING_WENT_WRONG])
     end
 
-
     # Entry point to call the service in a clean way (class method).
     def self.call(nutritionist_id, page: nil, per_page: nil)
       new(nutritionist_id, page: page, per_page: per_page).call

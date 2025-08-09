@@ -1,21 +1,11 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../services/api";
 import { MetaData } from "@/types/meta_data";
 import { NutritionistWithServices } from "@/types/nutritionist_with_service";
 import { PATHS } from "@/constants/paths";
+import { State } from "@/types/state_store";
 
-type PageKey = string;
-
-interface NutritionistsState {
-    cache: {
-        [key: PageKey]: {
-            data: NutritionistWithServices[];
-            meta: MetaData;
-        };
-    };
-    loading: boolean;
-    error: string | null;
-}
+type NutritionistsState = State<NutritionistWithServices[]>;
 
 const initialState: NutritionistsState = {
     cache: {},
@@ -24,10 +14,13 @@ const initialState: NutritionistsState = {
 };
 
 interface FetchNutritionistsParams {
-    nutritionistOrServiceName: string; page: number; per_page: number, location: string
+    nutritionistOrServiceName: string;
+    page: number;
+    per_page: number;
+    location: string;
 }
 
-function makePageKey(params: FetchNutritionistsParams) {
+function makePageKeyNutritionists(params: FetchNutritionistsParams) {
     return `location=${params.location || ""}&nutritionistOrServiceName=${params.nutritionistOrServiceName || ""}&per_page=${params.per_page}&page=${params.page}`;
 }
 
@@ -37,7 +30,7 @@ export const fetchNutritionists = createAsyncThunk<
     { rejectValue: string }
 >("nutritionists/fetch", async (params, thunkAPI) => {
     const { location, nutritionistOrServiceName, page, per_page } = params;
-    const pageKey = makePageKey(params);
+    const pageKey = makePageKeyNutritionists(params);
 
     const state = thunkAPI.getState() as { nutritionists: NutritionistsState };
     const cachedPage = state.nutritionists.cache[pageKey];
@@ -114,4 +107,4 @@ const nutritionistsSlice = createSlice({
 
 export const { resetCache } = nutritionistsSlice.actions;
 export default nutritionistsSlice.reducer;
-export { makePageKey };
+export { makePageKeyNutritionists };

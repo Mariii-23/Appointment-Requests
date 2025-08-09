@@ -13,7 +13,7 @@
     --font-mono: var(--font-geist-mono);
 
     --color-primary-green: #1ab394;
-    --color-primary-green-rgb: 0, 122, 51; 
+    --color-primary-green-rgb: 0, 122, 51;
 
     --color-secondary-green: #14ad9a;
     --color-terciary-green: #2ed080;
@@ -29,7 +29,7 @@
         --foreground: #ededed;
 
         --color-primary-green: #1ab394;
-        --color-primary-green-rgb: 0, 122, 51; 
+        --color-primary-green-rgb: 0, 122, 51;
 
         --color-secondary-green: #14ad9a;
         --color-terciary-green: #2ed080;
@@ -72,5 +72,5 @@ body {
 }
 
 @utility badge-primary {
-    @apply bg-[var(--color-bg-green)] text-[var(--color-primary-green)] border-[var(--color-bg-green)] ;
+    @apply bg-[var(--color-bg-green)] text-[var(--color-primary-green)] border-[var(--color-bg-green)];
 }
