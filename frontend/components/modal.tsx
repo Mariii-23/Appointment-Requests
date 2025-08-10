@@ -17,7 +17,7 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(({ title, onClose, child
                         className="btn btn-sm btn-circle btn-ghost"
                         onClick={onClose}
                     >
-                        <CloseIcon/>
+                        <CloseIcon />
                     </button>
                 </form>
 

@@ -12,14 +12,14 @@ interface NutritionistCardProps extends NutritionistWithServices {
     onClickWebsiteHandler: (nutricionId: string) => void;
 }
 
-const NutritionistWithServiceCard: React.FC<NutritionistCardProps> = ({
+const NutritionistWithServiceCard = ({
     id,
     name,
     email,
     services,
     onClickScheduleAppointmentHandler,
     onClickWebsiteHandler,
-}) => {
+}: NutritionistCardProps) => {
     const [selectedServiceId, setSelectedServiceId] = useState<string>(services[0]?.id || "");
 
     const handleServiceChange = (serviceId: string) => {
@@ -27,42 +27,42 @@ const NutritionistWithServiceCard: React.FC<NutritionistCardProps> = ({
     };
 
     return (
-                <CardLayout>
-                <div className="flex flex-row justify-between w-full">
-                    <div className="flex flex-colom gap-8">
-                        <div>
-                            <Avatar name={name} />
-                        </div>
-                        <div className="flex flex-col w-full gap-2">
-                            <div className="badge p-2 badge-primary flex items-center gap-2">
-                                <StarIcon size={24} />
-                                <span>FOLLOW-UP</span>
-                            </div>
-                            <h2 className="card-title">{name}</h2>
-                            {email && <p>{email}</p>}
-                        </div>
+        <CardLayout>
+            <div className="flex flex-row justify-between w-full">
+                <div className="flex flex-colom gap-8">
+                    <div>
+                        <Avatar name={name} />
                     </div>
-
-                    <div className="card-actions justify-between w-100">
-                        <button
-                            className="btn btn-secondary-card btn-sm w-full"
-                            onClick={() => onClickScheduleAppointmentHandler(id, selectedServiceId)}
-                        >
-                            Schedule appointment
-                        </button>
-                        <button
-                            className="btn btn-primary-card btn-sm w-full"
-                            onClick={() => onClickWebsiteHandler(id)}
-                        >
-                            Website
-                        </button>
+                    <div className="flex flex-col w-full gap-2">
+                        <div className="badge p-2 badge-primary flex items-center gap-2">
+                            <StarIcon size={24} />
+                            <span>FOLLOW-UP</span>
+                        </div>
+                        <h2 className="card-title">{name}</h2>
+                        {email && <p>{email}</p>}
                     </div>
                 </div>
 
-                <div className="justify-center items-center pl-[5%] pr-[10%] sm:pl-[8%] sm:pr-[20%]">
-                    <ServicesDisplay services={services} onServiceChange={handleServiceChange} />
+                <div className="card-actions justify-between w-100">
+                    <button
+                        className="btn btn-secondary-card btn-sm w-full"
+                        onClick={() => onClickScheduleAppointmentHandler(id, selectedServiceId)}
+                    >
+                        Schedule appointment
+                    </button>
+                    <button
+                        className="btn btn-primary-card btn-sm w-full"
+                        onClick={() => onClickWebsiteHandler(id)}
+                    >
+                        Website
+                    </button>
                 </div>
-            </CardLayout>
+            </div>
+
+            <div className="justify-center items-center pl-[5%] pr-[10%] sm:pl-[8%] sm:pr-[20%]">
+                <ServicesDisplay services={services} onServiceChange={handleServiceChange} />
+            </div>
+        </CardLayout>
     );
 };
 

@@ -1,21 +1,21 @@
 module AppointmentsService
   class List
-    def initialize(nutritionist_id, page: nil, per_page: nil)
+    def initialize(nutritionist_id, page: nil, per_page: nil, status: nil)
       @nutritionist_id = nutritionist_id
       @page = page
       @per_page = per_page
+      @status = status
     end
 
     def call
-      # Build the base query
       base_relation = Appointment.joins(:service)
                                  .where(services: { nutritionist_id: @nutritionist_id })
                                  .order(created_at: :desc)
-    
-      # Apply pagination
+      
+      base_relation = base_relation.where(status: @status) if @status.present?
+
       paginator = Pagination.new(base_relation, page: @page, per_page: @per_page)
-    
-      # Check if there are results in the paginated data
+
       if paginator.result[:data].present?
         Result.ok(paginator.result)
       else
@@ -26,9 +26,8 @@ module AppointmentsService
       Result.errors([AppointmentsService::Errors::SOMETHING_WENT_WRONG])
     end
 
-    # Entry point to call the service in a clean way (class method).
-    def self.call(nutritionist_id, page: nil, per_page: nil)
-      new(nutritionist_id, page: page, per_page: per_page).call
+    def self.call(nutritionist_id, page: nil, per_page: nil, status: nil)
+      new(nutritionist_id, page: page, per_page: per_page, status: status).call
     end
   end
 end

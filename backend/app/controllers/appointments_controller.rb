@@ -8,8 +8,9 @@ class AppointmentsController < ApplicationController
   def index
     page = params[:page]
     per_page = params[:per_page]
+    status = params[:status]
 
-    result = AppointmentsService::List.call(current_user.id, page: page, per_page: per_page)
+    result = AppointmentsService::List.call(current_user.id, page: page, per_page: per_page, status: status)
     render_result(result)
   end
 

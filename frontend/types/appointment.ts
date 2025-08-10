@@ -1,7 +1,7 @@
 export enum AppointmentStatus {
     Pending = "pending",
-    Approve = "approve",
-    Rejected = "reject",
+    Accepted = "accepted",
+    Rejected = "rejected",
 }
 export interface Appointment {
     id: string;
@@ -15,6 +15,7 @@ export interface Appointment {
 export interface FetchAppointmentsParams {
     page: number;
     per_page: number;
+    status?: AppointmentStatus;
 }
 
 export interface CreateAppointmentParams {

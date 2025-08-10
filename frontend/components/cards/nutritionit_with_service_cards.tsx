@@ -10,11 +10,11 @@ interface NutritionistsCardsProps {
     onClickWebsiteHandler: (nutricionId: string) => void;
 }
 
-const NutritionistWithServicesCards: React.FC<NutritionistsCardsProps> = ({
+const NutritionistWithServicesCards = ({
     nutritionists,
     onClickScheduleAppointmentHandler,
     onClickWebsiteHandler,
-}) => {
+}: NutritionistsCardsProps) => {
     return (
         <div className="flex flex-col gap-4 overflow-x-auto py-4">
             {nutritionists.map(nutri => (

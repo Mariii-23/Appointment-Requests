@@ -7,12 +7,12 @@ interface PaginatorProps {
     pagesToShowEachSide?: number; // default = 3
 }
 
-const Paginator: React.FC<PaginatorProps> = ({
+const Paginator = ({
     totalPages,
     currentPage,
     onClickPage,
     pagesToShowEachSide = 3,
-}) => {
+}: PaginatorProps) => {
     const renderButton = (page: number) => (
         <button
             key={page}

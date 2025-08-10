@@ -9,7 +9,7 @@ type ServicesDisplayProps = {
     onServiceChange?: (selectedServiceId: string) => void;
 };
 
-const ServicesDisplay: React.FC<ServicesDisplayProps> = ({ services, onServiceChange }) => {
+const ServicesDisplay = ({ services, onServiceChange }: ServicesDisplayProps) => {
     const [selectedServiceId, setSelectedServiceId] = useState<string>(services[0]?.id || "");
 
     const selectedService = useMemo(() => {

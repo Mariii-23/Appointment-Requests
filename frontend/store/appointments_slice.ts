@@ -2,7 +2,12 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../services/api";
 import { MetaData } from "@/types/meta_data";
 import { State } from "@/types/state_store";
-import { Appointment, CreateAppointmentParams, FetchAppointmentsParams } from "@/types/appointment";
+import {
+    Appointment,
+    AppointmentStatus,
+    CreateAppointmentParams,
+    FetchAppointmentsParams,
+} from "@/types/appointment";
 
 type AppointmentsState = State<Appointment[]>;
 
@@ -38,6 +43,7 @@ export const fetchAllAppointments = createAsyncThunk<
             params: {
                 page: params.page,
                 per_page: params.per_page,
+                status: params.status,
             },
         });
 
@@ -85,6 +91,29 @@ export const createAppointment = createAsyncThunk<
     }
 });
 
+export const updateAppointmentStatus = createAsyncThunk<
+    Appointment,
+    { appointmentId: string; status: AppointmentStatus },
+    { rejectValue: string }
+>("appointments/updateStatus", async ({ appointmentId, status }, thunkAPI) => {
+    try {
+        const res = await api.patch(`/appointments/${appointmentId}/update_status`, {
+            status,
+        });
+
+        if (res.data.isSuccess) {
+            return res.data.result;
+        } else {
+            return thunkAPI.rejectWithValue("Failed to update appointment status");
+        }
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+        return thunkAPI.rejectWithValue("Unknown error occurred");
+    }
+});
+
 const appointmentsSlice = createSlice({
     name: "appointments",
     initialState,
@@ -121,6 +150,22 @@ const appointmentsSlice = createSlice({
             .addCase(createAppointment.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload ?? "Failed to create appointment";
+            })
+            .addCase(updateAppointmentStatus.pending, state => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(updateAppointmentStatus.fulfilled, (state, action) => {
+                state.loading = false;
+                const updatedAppointment = action.payload;
+
+                Object.values(state.cache).forEach(pageData => {
+                    pageData.data = pageData.data.filter(a => a.id !== updatedAppointment.id);
+                });
+            })
+            .addCase(updateAppointmentStatus.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload ?? "Failed to update appointment status";
             });
     },
 });

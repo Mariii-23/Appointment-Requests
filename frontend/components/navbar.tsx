@@ -7,7 +7,7 @@ import { PATHS } from "@/constants/paths";
 import { logout } from "@/store/authSlice";
 import type { RootState, AppDispatch } from "@/store";
 
-export default function Navbar() {
+const Navbar = () => {
     const router = useRouter();
     const dispatch = useDispatch<AppDispatch>();
 
@@ -51,4 +51,6 @@ export default function Navbar() {
             )}
         </div>
     );
-}
+};
+
+export default Navbar;

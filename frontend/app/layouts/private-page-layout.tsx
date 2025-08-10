@@ -3,28 +3,28 @@
 import React, { ReactNode, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import type { RootState } from "@/store"; 
+import type { RootState } from "@/store";
 import { PATHS } from "@/constants/paths";
 
 type PrivatePageLayoutProps = {
-  children: ReactNode;
+    children: ReactNode;
 };
 
 const PrivateRoute: React.FC<PrivatePageLayoutProps> = ({ children }) => {
-  const router = useRouter();
-  const token = useSelector((state: RootState) => state.auth.token);
+    const router = useRouter();
+    const token = useSelector((state: RootState) => state.auth.token);
 
-  useEffect(() => {
+    useEffect(() => {
+        if (!token) {
+            router.push(PATHS.LOGIN);
+        }
+    }, [token, router]);
+
     if (!token) {
-      router.push(PATHS.LOGIN);
+        return null;
     }
-  }, [token, router]);
 
-  if (!token) {
-    return null; 
-  }
-
-  return <>{children}</>;
+    return <>{children}</>;
 };
 
 export default PrivateRoute;

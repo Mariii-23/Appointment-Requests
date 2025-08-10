@@ -6,7 +6,7 @@ interface AvatarProps {
     size?: number;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ name, size = 100 }) => {
+const Avatar = ({ name, size = 100 }: AvatarProps) => {
     const stringToSeed = (str: string) => {
         let hash = 0;
         for (let i = 0; i < str.length; i++) {

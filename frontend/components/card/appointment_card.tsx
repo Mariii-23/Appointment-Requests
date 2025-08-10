@@ -1,49 +1,44 @@
 "use client";
 
 import React from "react";
-import { formatDate } from "@/utils/date";
 import { Appointment } from "@/types/appointment";
 import Avatar from "../avatar";
-import CalendarIcon from "../icons/calendar-icon";
-import ClockIcon from "../icons/clock-icon";
 import CardWithButtonLayout from "@/app/layouts/card-with-button-layout";
+import DateTimeDisplay from "../date_time_display";
 
 interface AppointmentCardProps extends Appointment {
-  openModal: () => void;
-};
+    onAnswerRequestAppointmentClick: (appointment: Appointment) => void;
+}
 
-const AppointmentCard: React.FC<AppointmentCardProps> = ({ date_time,  guest_name, openModal }) => {
-  const { day, monthYear, time } = formatDate(date_time);
+const AppointmentCard = ({
+    date_time,
+    guest_name,
+    onAnswerRequestAppointmentClick,
+    ...appointmentProps
+}: AppointmentCardProps) => {
+    const appointment = { date_time, guest_name, ...appointmentProps };
 
-  return (
-    <CardWithButtonLayout onButtonClick={openModal} buttonText="Answer request" >
-      <div className="flex flex-row gap-8">
-        <div>
-          <Avatar name={guest_name} />
-        </div>
-
-        <div className="flex flex-col gap-8">
-            <div className="flex flex-col w-full gap-8">
-              <div className="flex flex-col w-full gap-2">
-                <h2 className="card-title">{guest_name}</h2>
-                <p>Online appointment</p>
-              </div>
-
-              <div className="flex flex-col w-full gap-2">
-                <div className="flex items-center gap-2">
-                <CalendarIcon/>
-                <p>{`${day} ${monthYear}`}</p>
+    return (
+        <CardWithButtonLayout
+            onButtonClick={() => onAnswerRequestAppointmentClick(appointment)}
+            buttonText="Answer request"
+        >
+            <div className="flex flex-row gap-8">
+                <div>
+                    <Avatar name={guest_name} />
                 </div>
-                <div className="flex items-center gap-2">
-                <ClockIcon/>
-                <p>{time}</p>
+
+                <div className="flex flex-col w-full gap-2">
+                    <h2 className="card-title">{guest_name}</h2>
+                    <p>Online appointment</p>
                 </div>
-              </div>
             </div>
-        </div>
-      </div>
-    </CardWithButtonLayout>
-  );
+
+            <div className="flex items-center justify-center w-full">
+                <DateTimeDisplay dateTime={appointment.date_time} />
+            </div>
+        </CardWithButtonLayout>
+    );
 };
 
 export default AppointmentCard;

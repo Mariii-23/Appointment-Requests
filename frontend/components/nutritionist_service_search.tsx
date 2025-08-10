@@ -5,7 +5,7 @@ type NutritionistServiceSearchProps = {
     onSearch: (search: string, location: string) => void;
 };
 
-const NutritionistServiceSearch: React.FC<NutritionistServiceSearchProps> = ({ onSearch }) => {
+const NutritionistServiceSearch = ({ onSearch }: NutritionistServiceSearchProps) => {
     const [search, setSearch] = useState("");
     const [location, setLocation] = useState("");
 
