@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import api from "../services/api";
 import { AuthState, LoginResponse, LoginPayload } from "@/types/auth";
+import { extractApiErrors } from "@/types/fetch";
 
 const initialState: AuthState = {
     token: null,
@@ -19,10 +20,8 @@ export const login = createAsyncThunk<LoginResponse, LoginPayload, { rejectValue
             }
             return thunkAPI.rejectWithValue("Login failed");
         } catch (error: unknown) {
-            if (error instanceof Error) {
-                return thunkAPI.rejectWithValue(error.message);
-            }
-            return thunkAPI.rejectWithValue("Unknown error occurred");
+            const extracted = extractApiErrors(error);
+            return thunkAPI.rejectWithValue(extracted ?? "Unknown error occurred");
         }
     },
 );

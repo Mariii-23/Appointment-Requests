@@ -4,6 +4,7 @@ import { MetaData } from "@/types/meta_data";
 import { NutritionistWithServices } from "@/types/nutritionist_with_service";
 import { PATHS } from "@/constants/paths";
 import { State } from "@/types/state_store";
+import { extractApiErrors } from "@/types/fetch";
 
 type NutritionistsState = State<NutritionistWithServices[]>;
 
@@ -70,10 +71,8 @@ export const fetchNutritionists = createAsyncThunk<
             return thunkAPI.rejectWithValue("Failed to fetch nutritionists");
         }
     } catch (error: unknown) {
-        if (error instanceof Error) {
-            return thunkAPI.rejectWithValue(error.message);
-        }
-        return thunkAPI.rejectWithValue("Unknown error occurred");
+        const extracted = extractApiErrors(error);
+        return thunkAPI.rejectWithValue(extracted ?? "Unknown error occurred");
     }
 });
 

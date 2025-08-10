@@ -8,6 +8,7 @@ import {
     CreateAppointmentParams,
     FetchAppointmentsParams,
 } from "@/types/appointment";
+import { extractApiErrors } from "@/types/fetch";
 
 type AppointmentsState = State<Appointment[]>;
 
@@ -81,13 +82,11 @@ export const createAppointment = createAsyncThunk<
         if (res.data.isSuccess) {
             return res.data.result;
         } else {
-            return thunkAPI.rejectWithValue("Failed to create appointment");
+            return thunkAPI.rejectWithValue(res.data.errors);
         }
     } catch (error: unknown) {
-        if (error instanceof Error) {
-            return thunkAPI.rejectWithValue(error.message);
-        }
-        return thunkAPI.rejectWithValue("Unknown error occurred");
+        const extracted = extractApiErrors(error);
+        return thunkAPI.rejectWithValue(extracted ?? "Unknown error occurred");
     }
 });
 
@@ -107,10 +106,8 @@ export const updateAppointmentStatus = createAsyncThunk<
             return thunkAPI.rejectWithValue("Failed to update appointment status");
         }
     } catch (error: unknown) {
-        if (error instanceof Error) {
-            return thunkAPI.rejectWithValue(error.message);
-        }
-        return thunkAPI.rejectWithValue("Unknown error occurred");
+        const extracted = extractApiErrors(error);
+        return thunkAPI.rejectWithValue(extracted ?? "Unknown error occurred");
     }
 });
 

@@ -15,6 +15,7 @@ import CardLayout from "@/app/layouts/card-layout";
 import { Appointment, AppointmentStatus } from "@/types/appointment";
 import RejectApproveAppointmentModal from "@/components/modal/RejectApproveAppointmentModal";
 import AppointmentsHeader from "@/components/headers/PendingAppointmentsHeader";
+import useAlert from "@/hooks/useAlert";
 
 export default function NutritionistAppointmentsPage() {
     const perPage = 6;
@@ -27,6 +28,7 @@ export default function NutritionistAppointmentsPage() {
         date_time: "",
     };
 
+    const showAlert = useAlert();
     const dispatch = useDispatch<AppDispatch>();
     const modalRef = useRef<HTMLDialogElement>(null);
     const openModal = () => modalRef.current?.showModal();
@@ -90,10 +92,10 @@ export default function NutritionistAppointmentsPage() {
             .then(() => {
                 closeModal();
                 setAppointmentSelected(initialAppointment);
+                showAlert("success", "Appointment accepted!\nEmail sent to client.");
             })
             .catch(err => {
-                console.error("Failed to accept appointment:", err);
-                //TODO: Mostrar erro pro user
+                showAlert("error", err);
             });
     };
 
@@ -103,10 +105,10 @@ export default function NutritionistAppointmentsPage() {
             .then(() => {
                 closeModal();
                 setAppointmentSelected(initialAppointment);
+                showAlert("success", "Appointment rejected!\nEmail sent to client.");
             })
             .catch(err => {
-                console.error("Failed to reject appointment:", err);
-                //TODO: Mostrar erro pro user
+                showAlert("error", err);
             });
     };
 

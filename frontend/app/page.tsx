@@ -14,12 +14,14 @@ import NutritionistServiceSearch from "@/components/nutritionist_service_search"
 import BannerLayout from "./layouts/banner-layout";
 import BodyLayout from "./layouts/body-layout";
 import Modal from "@/components/modal";
-import AppointmentForm from "@/components/forms/appointment_form";
 import { createAppointment } from "@/store/appointments_slice";
+import AppointmentForm, { AppointmentFormHandle } from "@/components/forms/appointment_form";
+import useAlert from "@/hooks/useAlert";
 
 export default function Home() {
     const dispatch = useDispatch<AppDispatch>();
     const modalRef = useRef<HTMLDialogElement>(null);
+    const formRef = useRef<AppointmentFormHandle>(null);
 
     const perPage = 2;
 
@@ -28,6 +30,8 @@ export default function Home() {
     const [location, setLocation] = useState("");
     const [serviceId, setServiceId] = useState("");
     const [nutritionist, setNutritionist] = useState("");
+
+    const showAlert = useAlert();
 
     const openModal = () => modalRef.current?.showModal();
     const closeModal = () => modalRef.current?.close();
@@ -109,17 +113,18 @@ export default function Home() {
                 }),
             );
 
+            closeModal();
+
             if (createAppointment.fulfilled.match(resultAction)) {
-                //TODO: Alertar o sucesso
-                console.log("Agendamento criado com sucesso!");
-                closeModal();
+                formRef.current?.reset();
+
+                showAlert("success", "Appointment created with sucess!");
             } else {
-                //TODO: Alertar o erro
-                console.error("Falha ao criar agendamento:", resultAction.payload);
+                showAlert("error", resultAction.payload ?? "Error creating an appointment");
             }
-        } catch (error) {
-            //TODO: Alertar o erro
-            console.error("Error:", error);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (_error) {
+            showAlert("error", "Error creating an appointment.");
         }
     };
 
@@ -151,7 +156,7 @@ export default function Home() {
                 )}
 
                 <Modal ref={modalRef} title="Appointment" onClose={closeModal}>
-                    <AppointmentForm onSubmit={handleAppointmentSubmit} submitting={false} />
+                    <AppointmentForm ref={formRef} onSubmit={handleAppointmentSubmit} submitting={false} />
                 </Modal>
             </BodyLayout>
         </>

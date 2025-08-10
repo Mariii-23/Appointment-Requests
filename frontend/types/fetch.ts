@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export class FetchEndpointVoidResult {
     Errors: string[];
 
@@ -21,4 +22,34 @@ export class FetchEndpointResult<T> extends FetchEndpointVoidResult {
         super(errors ?? []);
         this.Result = result;
     }
+}
+
+export const extractApiErrors = (error: unknown): string | null => {
+    if (
+        typeof error === "object" &&
+        error !== null &&
+        "response" in error &&
+        typeof (error as any).response === "object" &&
+        (error as any).response?.data?.errors
+    ) {
+        const errors = (error as any).response.data.errors;
+
+        if (Array.isArray(errors)) {
+            return errors.join("\n");
+        }
+
+        if (typeof errors === "object") {
+            return Object.values(errors)
+                .flat()
+                .join("\n");
+        }
+
+        return String(errors);
+    }
+
+    if (error instanceof Error) {
+        return error.message;
+    }
+
+    return "Unknown error occurred";
 }
