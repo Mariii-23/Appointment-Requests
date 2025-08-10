@@ -9,7 +9,7 @@ import Modal from "@/components/modal";
 import useAlert from "@/hooks/useAlert";
 import { AppDispatch, RootState } from "@/store";
 import { createAppointment } from "@/store/appointments_slice";
-import { fetchNutritionistById } from "@/store/nutricionists_with_services_slice";
+import { fetchNutritionistById } from "@/store/nutritionists_with_services_slice";
 import { useEffect, use, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 

@@ -1,0 +1,14 @@
+{
+    "guestName": "Nome do Convidado",
+    "guestNamePlaceholder": "João Silva",
+    "guestNameHint": "Por favor, insira seu nome completo.",
+    "email": "Email",
+    "emailPlaceholder": "email@exemplo.com",
+    "emailHint": "Insira um endereço de email válido.",
+    "appointmentDateTime": "Data e Hora da Consulta",
+    "appointmentDateTimeHint": "Escolha a data e hora preferida.",
+    "submit": {
+        "book": "Marcar Consulta",
+        "booking": "Marcando..."
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "title": "Bem Vindo de Volta!!!",
+    "email": "Email",
+    "email-validator": "Introduza um email válido",
+    "password": "Password",
+    "password-validator": "Tem que ter mais que 8 carácters.",
+    "submit-button": "Login",
+    "submit-button-loading": "Loading..."
+}

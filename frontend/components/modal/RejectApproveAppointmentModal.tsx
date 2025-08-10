@@ -3,6 +3,8 @@ import React, { forwardRef } from "react";
 import Modal from "../modal";
 import DateTimeDisplay from "../date_time_display";
 import Avatar from "../avatar";
+import { useTranslation } from "react-i18next";
+import { capitalizeFirstLetter } from "@/utils/common";
 
 type Props = {
     appointment: Appointment;
@@ -13,6 +15,9 @@ type Props = {
 
 const RejectApproveAppointmentModal = forwardRef<HTMLDialogElement, Props>(
     ({ onCloseModal, appointment, onAcceptAppoitment, onRejectAppointment }, ref) => {
+        const { t } = useTranslation("common");
+        const { t: tModal } = useTranslation("components/modal/reject_appprove_appointment");
+
         const handleAccept = () => {
             onAcceptAppoitment(appointment.id);
         };
@@ -22,7 +27,7 @@ const RejectApproveAppointmentModal = forwardRef<HTMLDialogElement, Props>(
         };
 
         return (
-            <Modal ref={ref} title="Accept or Reject Appointment" onClose={onCloseModal}>
+            <Modal ref={ref} title={tModal("title")} onClose={onCloseModal}>
                 <div className="flex flex-col gap-4">
                     <div className="flex flex-row gap-4">
                         <div>
@@ -30,11 +35,15 @@ const RejectApproveAppointmentModal = forwardRef<HTMLDialogElement, Props>(
                         </div>
                         <div className="flex flex-col gap-2">
                             <p>
-                                <strong className="text-primary-green">Client:</strong>{" "}
+                                <strong className="text-primary-green">
+                        {capitalizeFirstLetter(t("client"))}
+                                    :</strong>{" "}
                                 {appointment.guest_name}
                             </p>
                             <p>
-                                <strong className="text-primary-green">Email:</strong>{" "}
+                                <strong className="text-primary-green">
+                        {capitalizeFirstLetter(t("email"))}
+                                    :</strong>{" "}
                                 {appointment.guest_email}
                             </p>
                         </div>
@@ -45,10 +54,10 @@ const RejectApproveAppointmentModal = forwardRef<HTMLDialogElement, Props>(
 
                 <div className="flex justify-end gap-4">
                     <button className="btn btn-outline" onClick={handleReject}>
-                        Reject
+                        {capitalizeFirstLetter(t("reject"))}
                     </button>
                     <button className="btn btn-primary" onClick={handleAccept}>
-                        Accept
+                        {capitalizeFirstLetter(t("accept"))}
                     </button>
                 </div>
             </Modal>

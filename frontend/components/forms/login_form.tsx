@@ -2,6 +2,7 @@
 
 import FormLayout from "@/app/layouts/form-layout";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type LoginFormProps = {
     onSubmit: (data: { email: string; password: string }) => void;
@@ -13,6 +14,8 @@ export default function LoginForm({ onSubmit, submitting, error }: LoginFormProp
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [formValid, setFormValid] = useState(false);
+
+    const { t } = useTranslation("components/form/login");
 
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -32,7 +35,7 @@ export default function LoginForm({ onSubmit, submitting, error }: LoginFormProp
 
     return (
         <FormLayout
-            title="Welcome back!!!"
+            title={t("title")}
             ref={formRef}
             onSubmit={e => {
                 e.preventDefault();
@@ -42,7 +45,7 @@ export default function LoginForm({ onSubmit, submitting, error }: LoginFormProp
             }}
         >
             <fieldset className="fieldset w-full">
-                <legend className="fieldset-legend">Email</legend>
+                <legend className="fieldset-legend">{t("email")}</legend>
                 <input
                     className="input validator w-full"
                     type="email"
@@ -51,22 +54,26 @@ export default function LoginForm({ onSubmit, submitting, error }: LoginFormProp
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                 />
-                <div className="validator-hint">Enter valid email address</div>
+                <div className="validator-hint">
+                    {t("email-validator")}
+                    </div>
             </fieldset>
 
             <fieldset className="fieldset w-full">
-                <legend className="fieldset-legend">Password</legend>
+                <legend className="fieldset-legend">{t("password")}</legend>
                 <input
                     type="password"
                     className="input validator w-full"
                     required
                     placeholder="Password"
                     minLength={8}
-                    title="Must be more than 8 characters"
+                    title={t("password-validator")}
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                 />
-                <div className="validator-hint">Must be more than 8 characters.</div>
+                <div className="validator-hint">
+                    {t("password-validator")}
+                    </div>
             </fieldset>
 
             <button
@@ -74,7 +81,7 @@ export default function LoginForm({ onSubmit, submitting, error }: LoginFormProp
                 className="btn btn-primary w-full"
                 disabled={submitting || !formValid}
             >
-                {submitting ? "Loading..." : "Login"}
+                {submitting ? t("submit-button-loading") : t("submit-button")}
             </button>
 
             {error && <p style={{ color: "red" }}>{error}</p>}

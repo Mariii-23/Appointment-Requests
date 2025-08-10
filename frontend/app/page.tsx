@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     fetchNutritionists,
     makePageKeyNutritionists,
-} from "@/store/nutricionists_with_services_slice";
+} from "@/store/nutritionists_with_services_slice";
 import Paginator from "@/components/paginator";
 import { NutritionistWithServices } from "@/types/nutritionist_with_service";
 import { AppDispatch, RootState } from "@/store";
@@ -19,12 +19,16 @@ import AppointmentForm, { AppointmentFormHandle } from "@/components/forms/appoi
 import useAlert from "@/hooks/useAlert";
 import { PATHS } from "@/constants/paths";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
+import { capitalizeFirstLetter } from "@/utils/common";
 
 export default function Home() {
     const dispatch = useDispatch<AppDispatch>();
 
     const modalRef = useRef<HTMLDialogElement>(null);
     const formRef = useRef<AppointmentFormHandle>(null);
+
+    const { t } = useTranslation("common");
 
     const perPage = 2;
 
@@ -95,7 +99,7 @@ export default function Home() {
     };
 
     const onClickWebsiteHandler = (nutritionistId: string) => {
-        router.push(PATHS.NUTRICIONISTS_BY_ID(nutritionistId));
+        router.push(PATHS.NUTRITIONISTS_BY_ID(nutritionistId));
     };
 
     const handleAppointmentSubmit = async (data: {
@@ -137,8 +141,8 @@ export default function Home() {
                 <NutritionistServiceSearch onSearch={onSearch} />
             </BannerLayout>
             <BodyLayout>
-                {loading && <div>Loading...</div>}
-                {error && <div className="text-red-600">Error: {error}</div>}
+                {loading && <div>{capitalizeFirstLetter(t("loading"))}...</div>}
+                {error && <div className="text-red-600">{capitalizeFirstLetter(t("error"))}: {error}</div>}
 
                 {currentPageData && (
                     <>
@@ -158,7 +162,7 @@ export default function Home() {
                     </>
                 )}
 
-                <Modal ref={modalRef} title="Appointment" onClose={closeModal}>
+                <Modal ref={modalRef} title={capitalizeFirstLetter(t("appointment"))} onClose={closeModal}>
                     <AppointmentForm ref={formRef} onSubmit={handleAppointmentSubmit} submitting={false} />
                 </Modal>
             </BodyLayout>

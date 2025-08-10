@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
-import nutritionistsReducer from "./nutricionists_with_services_slice";
+import nutritionistsReducer from "./nutritionists_with_services_slice";
 import appointmentsReducer from "./appointments_slice";
 
 export const store = configureStore({

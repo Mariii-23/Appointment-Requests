@@ -1,0 +1,14 @@
+{
+    "reject": "rejeitar",
+    "accept": "aceitar",
+    "client": "cliente",
+    "email": "email",
+    "name": "nome",
+    "schedule": "marcar",
+    "appointment": "consulta",
+    "website": "website",
+    "followUp": "acompanhar",
+    "welcome-back": "bem vindo de volta",
+    "loading": "loading",
+    "error": "erro"
+}

@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useTransition } from "react";
 import { Appointment } from "@/types/appointment";
 import Avatar from "../avatar";
 import CardWithButtonLayout from "@/app/layouts/card-with-button-layout";
 import DateTimeDisplay from "../date_time_display";
+import { useTranslation } from "react-i18next";
 
 interface AppointmentCardProps extends Appointment {
     onAnswerRequestAppointmentClick: (appointment: Appointment) => void;
@@ -18,11 +19,13 @@ const AppointmentCard = ({
     ...appointmentProps
 }: AppointmentCardProps) => {
     const appointment = { date_time, guest_name, guest_email, ...appointmentProps };
+    
+    const { t } = useTranslation("componets/card/appointment-card");
 
     return (
         <CardWithButtonLayout
             onButtonClick={() => onAnswerRequestAppointmentClick(appointment)}
-            buttonText="Answer request"
+            buttonText={t("answer-request")}
         >
             <div className="flex flex-row gap-8">
                 <div>

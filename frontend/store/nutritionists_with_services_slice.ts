@@ -47,7 +47,7 @@ export const fetchNutritionists = createAsyncThunk<
     }
 
     try {
-        const res = await api.get(PATHS.NUTRICIONISTS_BY_FILTER, {
+        const res = await api.get(PATHS.NUTRITIONISTS_BY_FILTER, {
             params: {
                 location,
                 nutritionist_or_service_name: nutritionistOrServiceName,
@@ -84,7 +84,7 @@ export const fetchNutritionistById = createAsyncThunk<
     { rejectValue: string }
 >("nutritionists/fetchById", async (nutritionistId, thunkAPI) => {
     try {
-        const res = await api.get(`${PATHS.NUTRICIONISTS_BY_ID(nutritionistId)}?include_services=true`);
+        const res = await api.get(`${PATHS.NUTRITIONISTS_BY_ID(nutritionistId)}?include_services=true`);
 
         if (res.data.isSuccess) {
             return res.data.result as NutritionistWithServices;

@@ -1,0 +1,14 @@
+{
+    "guestName": "Guest Name",
+    "guestNamePlaceholder": "John Doe",
+    "guestNameHint": "Please enter your full name.",
+    "email": "Email",
+    "emailPlaceholder": "email@example.com",
+    "emailHint": "Enter a valid email address.",
+    "appointmentDateTime": "Appointment Date & Time",
+    "appointmentDateTimeHint": "Pick your preferred date and time.",
+    "submit": {
+        "book": "Book Appointment",
+        "booking": "Booking..."
+    }
+}

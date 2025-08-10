@@ -1,7 +1,7 @@
 export const PATHS = {
     HOME: "/",
     LOGIN: "/auth/login",
-    NUTRICIONISTS_BY_FILTER: "/nutritionists/search",
-    NUTRICIONISTS_DASHBOARD: "/dashboard/appointments",
-    NUTRICIONISTS_BY_ID: (id: string | number) => `/nutritionists/${id}`,
+    NUTRITIONISTS_BY_FILTER: "/nutritionists/search",
+    NUTRITIONISTS_DASHBOARD: "/dashboard/appointments",
+    NUTRITIONISTS_BY_ID: (id: string | number) => `/nutritionists/${id}`,
 };

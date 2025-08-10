@@ -3,6 +3,7 @@ import React, { useMemo, useState } from "react";
 import MapPinIcon from "./icons/map-pin-icon";
 import BankNotesIcon from "./icons/bank-notes-icon";
 import WalletIcon from "./icons/wallet-icon";
+import { useTranslation } from "react-i18next";
 
 type ServicesDisplayProps = {
     services: Service[];
@@ -11,6 +12,7 @@ type ServicesDisplayProps = {
 
 const ServicesDisplay = ({ services, onServiceChange }: ServicesDisplayProps) => {
     const [selectedServiceId, setSelectedServiceId] = useState<string>(services[0]?.id || "");
+    const { t  } = useTranslation("components/services_display");
 
     const selectedService = useMemo(() => {
         return services.find(s => s.id == selectedServiceId);
@@ -30,7 +32,7 @@ const ServicesDisplay = ({ services, onServiceChange }: ServicesDisplayProps) =>
             <div className="flex flex-row gap-2">
                 <MapPinIcon />
                 <div className="flex flex-col gap-4">
-                    <h1>Online Follow-up</h1>
+                    <h1>{t("followUp")}</h1>
                     <span>{selectedService.location}</span>
                 </div>
             </div>

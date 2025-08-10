@@ -1,0 +1,12 @@
+{
+    "reject": "reject",
+    "accept": "accept",
+    "client": "client",
+    "email": "email",
+    "name": "name",
+    "schedule": "schedule",
+    "appointment": "appointment",
+    "website": "website",
+    "followUp": "follow-up",
+    "welcome-back": "welcome back"
+}

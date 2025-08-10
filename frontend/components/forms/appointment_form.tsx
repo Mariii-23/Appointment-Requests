@@ -1,97 +1,98 @@
-import FormLayout from "@/app/layouts/form-layout";
+"use client";
+
 import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
+import { useTranslation } from "react-i18next";
+import FormLayout from "@/app/layouts/form-layout";
 
 type AppointmentFormProps = {
-    onSubmit: (data: { name: string; email: string; datetime: string }) => void;
-    submitting?: boolean;
+  onSubmit: (data: { name: string; email: string; datetime: string }) => void;
+  submitting?: boolean;
 };
 
 export type AppointmentFormHandle = {
-    reset: () => void;
+  reset: () => void;
 };
 
 const AppointmentForm = forwardRef<AppointmentFormHandle, AppointmentFormProps>(
-    ({ onSubmit, submitting }, ref) => {
-        const [name, setName] = useState("");
-        const [email, setEmail] = useState("");
-        const [datetime, setDatetime] = useState("");
-        const [formValid, setFormValid] = useState(false);
+  ({ onSubmit, submitting }, ref) => {
+    const { t } = useTranslation("components/form/appointment");
 
-        const formRef = useRef<HTMLFormElement>(null);
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [datetime, setDatetime] = useState("");
+    const [formValid, setFormValid] = useState(false);
 
-        useEffect(() => {
-            if (formRef.current) {
-                setFormValid(formRef.current.checkValidity());
-            }
-        }, [name, email, datetime]);
+    const formRef = useRef<HTMLFormElement>(null);
 
-        useImperativeHandle(ref, () => ({
-            reset() {
-                setName("");
-                setEmail("");
-                setDatetime("");
-            },
-        }));
+    useEffect(() => {
+      if (formRef.current) {
+        setFormValid(formRef.current.checkValidity());
+      }
+    }, [name, email, datetime]);
 
-        return (
-            <FormLayout
-                ref={formRef}
-                onSubmit={e => {
-                    e.preventDefault();
-                    if (formValid) {
-                        onSubmit({ name, email, datetime });
-                    }
-                }}
-                className="w-full max-w-md mx-auto space-y-6 p-4"
-            >
-                <fieldset className="fieldset w-full">
-                    <legend className="fieldset-legend">Guest Name</legend>
-                    <input
-                        className="input validator w-full"
-                        type="text"
-                        required
-                        placeholder="John Doe"
-                        value={name}
-                        onChange={e => setName(e.target.value)}
-                    />
-                    <div className="validator-hint">Please enter your full name.</div>
-                </fieldset>
+    useImperativeHandle(ref, () => ({
+      reset() {
+        setName("");
+        setEmail("");
+        setDatetime("");
+      },
+    }));
 
-                <fieldset className="fieldset w-full">
-                    <legend className="fieldset-legend">Email</legend>
-                    <input
-                        className="input validator w-full"
-                        type="email"
-                        required
-                        placeholder="email@example.com"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                    />
-                    <div className="validator-hint">Enter a valid email address.</div>
-                </fieldset>
+    return (
+      <FormLayout
+        ref={formRef}
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (formValid) {
+            onSubmit({ name, email, datetime });
+          }
+        }}
+        className="w-full max-w-md mx-auto space-y-6 p-4"
+      >
+        <fieldset className="fieldset w-full">
+          <legend className="fieldset-legend">{t("guestName")}</legend>
+          <input
+            className="input validator w-full"
+            type="text"
+            required
+            placeholder={t("guestNamePlaceholder")}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <div className="validator-hint">{t("guestNameHint")}</div>
+        </fieldset>
 
-                <fieldset className="fieldset w-full">
-                    <legend className="fieldset-legend">Appointment Date & Time</legend>
-                    <input
-                        className="input validator w-full"
-                        type="datetime-local"
-                        required
-                        value={datetime}
-                        onChange={e => setDatetime(e.target.value)}
-                    />
-                    <div className="validator-hint">Pick your preferred date and time.</div>
-                </fieldset>
+        <fieldset className="fieldset w-full">
+          <legend className="fieldset-legend">{t("email")}</legend>
+          <input
+            className="input validator w-full"
+            type="email"
+            required
+            placeholder={t("emailPlaceholder")}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <div className="validator-hint">{t("emailHint")}</div>
+        </fieldset>
 
-                <button
-                    type="submit"
-                    className="btn btn-primary w-full"
-                    disabled={submitting || !formValid}
-                >
-                    {submitting ? "Booking..." : "Book Appointment"}
-                </button>
-            </FormLayout>
-        );
-    },
+        <fieldset className="fieldset w-full">
+          <legend className="fieldset-legend">{t("appointmentDateTime")}</legend>
+          <input
+            className="input validator w-full"
+            type="datetime-local"
+            required
+            value={datetime}
+            onChange={(e) => setDatetime(e.target.value)}
+          />
+          <div className="validator-hint">{t("appointmentDateTimeHint")}</div>
+        </fieldset>
+
+        <button type="submit" className="btn btn-primary w-full" disabled={submitting || !formValid}>
+          {submitting ? t("submit.booking") : t("submit.book")}
+        </button>
+      </FormLayout>
+    );
+  }
 );
 
 AppointmentForm.displayName = "AppointmentForm";

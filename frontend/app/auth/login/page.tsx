@@ -16,7 +16,7 @@ export default function LoginPage() {
         const resultAction = await dispatch(login(data));
 
         if (login.fulfilled.match(resultAction)) {
-            router.push(PATHS.NUTRICIONISTS_DASHBOARD);
+            router.push(PATHS.NUTRITIONISTS_DASHBOARD);
         }
     };
 
