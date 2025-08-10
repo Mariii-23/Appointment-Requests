@@ -6,7 +6,7 @@ module AppointmentsService
     end
 
     def call
-      nutritionist_result = NutritionistsService::Show.call(@nutritionist_id)
+      nutritionist_result = NutritionistsService::Show.find_by_id(@nutritionist_id)
 
       if nutritionist_result.has_errors?
         return Result.errors([AppointmentsService::Errors::NUTRIONIST_NOT_FOUND])

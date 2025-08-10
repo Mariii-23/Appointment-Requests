@@ -7,7 +7,7 @@ import NutritionistWithServiceCard from "../card/nutritionit_with_service_card";
 interface NutritionistsCardsProps {
     nutritionists: NutritionistWithServices[];
     onClickScheduleAppointmentHandler: (nutricionId: string, service_id: string) => void;
-    onClickWebsiteHandler: (nutricionId: string) => void;
+    onClickWebsiteHandler?: (nutricionId: string) => void;
 }
 
 const NutritionistWithServicesCards = ({

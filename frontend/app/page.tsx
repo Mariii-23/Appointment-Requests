@@ -17,9 +17,12 @@ import Modal from "@/components/modal";
 import { createAppointment } from "@/store/appointments_slice";
 import AppointmentForm, { AppointmentFormHandle } from "@/components/forms/appointment_form";
 import useAlert from "@/hooks/useAlert";
+import { PATHS } from "@/constants/paths";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
     const dispatch = useDispatch<AppDispatch>();
+
     const modalRef = useRef<HTMLDialogElement>(null);
     const formRef = useRef<AppointmentFormHandle>(null);
 
@@ -31,6 +34,7 @@ export default function Home() {
     const [serviceId, setServiceId] = useState("");
     const [nutritionist, setNutritionist] = useState("");
 
+    const router = useRouter();
     const showAlert = useAlert();
 
     const openModal = () => modalRef.current?.showModal();
@@ -90,9 +94,8 @@ export default function Home() {
         openModal();
     };
 
-    const onClickWebsiteHandler = (nutricionId: string) => {
-        //TODO:
-        console.log("Website: ", nutricionId);
+    const onClickWebsiteHandler = (nutritionistId: string) => {
+        router.push(PATHS.NUTRICIONISTS_BY_ID(nutritionistId));
     };
 
     const handleAppointmentSubmit = async (data: {

@@ -13,10 +13,11 @@ interface AppointmentCardProps extends Appointment {
 const AppointmentCard = ({
     date_time,
     guest_name,
+    guest_email,
     onAnswerRequestAppointmentClick,
     ...appointmentProps
 }: AppointmentCardProps) => {
-    const appointment = { date_time, guest_name, ...appointmentProps };
+    const appointment = { date_time, guest_name, guest_email, ...appointmentProps };
 
     return (
         <CardWithButtonLayout
@@ -30,7 +31,7 @@ const AppointmentCard = ({
 
                 <div className="flex flex-col w-full gap-2">
                     <h2 className="card-title">{guest_name}</h2>
-                    <p>Online appointment</p>
+                    <h2>{guest_email}</h2>
                 </div>
             </div>
 

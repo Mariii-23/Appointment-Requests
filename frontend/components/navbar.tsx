@@ -20,7 +20,7 @@ const Navbar = () => {
 
     return (
         <div className="bg-gradient-to-r from-terciary-green via-secondary-green to-primary-green transition-colors duration-500 ease-in-out flex items-center justify-between px-8 py-4">
-            <div className="flex items-center space-x-2 text-white font-semibold text-sm">
+            <div className="flex items-center space-x-2 text-white font-semibold text-sm" onClick={() => router.push(PATHS.HOME)}>
                 <img src="/logo.svg" alt="Logo" className="h-8 w-auto" />
             </div>
 

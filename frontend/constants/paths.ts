@@ -3,4 +3,5 @@ export const PATHS = {
     LOGIN: "/auth/login",
     NUTRICIONISTS_BY_FILTER: "/nutritionists/search",
     NUTRICIONISTS_DASHBOARD: "/dashboard/appointments",
+    NUTRICIONISTS_BY_ID: (id: string | number) => `/nutritionists/${id}`,
 };

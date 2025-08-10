@@ -10,7 +10,9 @@ class NutritionistsController < ApplicationController
   end
 
   def show
-    result = NutritionistsService::Show.call(params[:id])
+    include_services = ActiveModel::Type::Boolean.new.cast(params[:include_services])
+
+    result = NutritionistsService::Show.call(params[:id], include_services: include_services)
     render_result(result)
   end
 

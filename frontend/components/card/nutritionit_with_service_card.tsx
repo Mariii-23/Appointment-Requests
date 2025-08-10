@@ -9,7 +9,7 @@ import CardLayout from "@/app/layouts/card-layout";
 
 interface NutritionistCardProps extends NutritionistWithServices {
     onClickScheduleAppointmentHandler: (nutricionId: string, service_id: string) => void;
-    onClickWebsiteHandler: (nutricionId: string) => void;
+    onClickWebsiteHandler?: (nutricionId: string) => void;
 }
 
 const NutritionistWithServiceCard = ({
@@ -50,12 +50,14 @@ const NutritionistWithServiceCard = ({
                     >
                         Schedule appointment
                     </button>
+                    {onClickWebsiteHandler &&
                     <button
                         className="btn btn-primary-card btn-sm w-full"
                         onClick={() => onClickWebsiteHandler(id)}
                     >
                         Website
                     </button>
+                    }
                 </div>
             </div>
 
