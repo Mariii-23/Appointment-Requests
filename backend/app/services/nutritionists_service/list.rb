@@ -9,11 +9,14 @@ module NutritionistsService
 
     def call
       base_relation = Nutritionist.all
+      # base_relation = Nutritionist.select(:id, :name, :email)
 
       paginator = Pagination.new(base_relation, page: @page, per_page: @per_page)
 
       if paginator.result[:data].present?
-        Result.ok(paginator.result)
+        data = Nutritionist.where(id: paginator.result[:data].map { |n| n['id'] })
+                      .select(:id, :name, :email)
+        Result.ok(data)
       else
         Result.errors([FAILED_TO_FETCH])
       end

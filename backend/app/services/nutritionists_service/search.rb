@@ -21,7 +21,7 @@ module NutritionistsService
       base_relation = base_relation.distinct
 
       paginator = Pagination.new(base_relation, page: @page, per_page: @per_page)
-      nutritionists = paginator.result[:data]
+      nutritionists = paginator.result[:data].select(:id, :name, :email)
 
       if @include_services
         nutritionists = nutritionists.map do |nutritionist|

@@ -3,9 +3,10 @@ module NutritionistsService
     include NutritionistsService::Errors
 
     def self.call(id)
-      nutritionist = Nutritionist.find_by(id: id)
+      nutritionist = Nutritionist.where(id: id).select(:id, :name, :email).first
 
       if nutritionist
+
         Result.ok(nutritionist)
       else
         Result.errors([NUTRITIONIST_NOT_FOUND], status: :not_found)
