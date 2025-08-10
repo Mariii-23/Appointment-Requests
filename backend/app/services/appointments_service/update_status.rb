@@ -21,8 +21,11 @@ module AppointmentsService
         @appointment.save!
       end
 
-      # TODO: trigger email notification
-      # TODO: call email service
+      begin
+        MailService::AppointmentNotificationService.send_status_update_email(@appointment)
+      rescue => e
+        Rails.logger.error("Failed to send status update email: #{e.message}")
+      end
 
       Result.ok(@appointment)
     rescue ActiveRecord::RecordInvalid => e
