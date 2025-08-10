@@ -7,7 +7,7 @@ import { State as CachedState } from "@/types/state_store";
 import { extractApiErrors } from "@/types/fetch";
 
 interface NutritionistsState extends CachedState<NutritionistWithServices[]> {
-    selectedNutritionist?: NutritionistWithServices,
+    selectedNutritionist?: NutritionistWithServices;
 }
 
 const initialState: NutritionistsState = {
@@ -84,7 +84,9 @@ export const fetchNutritionistById = createAsyncThunk<
     { rejectValue: string }
 >("nutritionists/fetchById", async (nutritionistId, thunkAPI) => {
     try {
-        const res = await api.get(`${PATHS.NUTRITIONISTS_BY_ID(nutritionistId)}?include_services=true`);
+        const res = await api.get(
+            `${PATHS.NUTRITIONISTS_BY_ID(nutritionistId)}?include_services=true`,
+        );
 
         if (res.data.isSuccess) {
             return res.data.result as NutritionistWithServices;

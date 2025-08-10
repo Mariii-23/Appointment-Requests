@@ -8,6 +8,7 @@ import { logout } from "@/store/authSlice";
 import type { RootState, AppDispatch } from "@/store";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "./language_selector";
+import ArrowRigthIcon from "./icons/arrow-rigth";
 
 const Navbar = () => {
     const router = useRouter();
@@ -23,39 +24,33 @@ const Navbar = () => {
 
     return (
         <div className="bg-gradient-to-r from-terciary-green via-secondary-green to-primary-green transition-colors duration-500 ease-in-out flex items-center justify-between px-8 py-4">
-            <div className="flex items-center space-x-2 text-white font-semibold text-sm" onClick={() => router.push(PATHS.HOME)}>
+            <div
+                className="flex items-center space-x-2 text-white font-semibold text-sm"
+                onClick={() => router.push(PATHS.HOME)}
+            >
                 <img src="/logo.svg" alt="Logo" className="h-8 w-auto" />
             </div>
 
             <div className="flex gap-2">
-            <LanguageSelector/>
-            {!nutritionist ? (
-                <a
-                    className="text-white text-sm font-light flex items-center space-x-1 hover:underline"
-                    onClick={() => router.push(PATHS.LOGIN)}
-                >
-                    <span>{t("areYouNutritionist")}</span>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
+                <LanguageSelector />
+                {!nutritionist ? (
+                    <a
+                        className="text-white text-sm font-light flex items-center space-x-1 hover:underline"
+                        onClick={() => router.push(PATHS.LOGIN)}
                     >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                    </svg>
-                </a>
-            ) : (
-                <div className="flex items-center space-x-4 text-white text-sm">
-                    <span>{t("welcome", { name: nutritionist.name })}</span>
-                    <button className="btn btn-ghost" onClick={handleLogout}>
-                        {t("logout")}
-                    </button>
-                </div>
-            )}
-
-</div>
+                        <span className="text-sm font-bold">{t("areYouNutritionist")}</span>
+                        <span className="text-sm font-bold">{t("knowOurSoftware")}</span>
+                        <ArrowRigthIcon color="white" />
+                    </a>
+                ) : (
+                    <div className="flex items-center space-x-4 text-white text-sm">
+                        <span>{t("welcome", { name: nutritionist.name })}</span>
+                        <button className="btn btn-ghost" onClick={handleLogout}>
+                            {t("logout")}
+                        </button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

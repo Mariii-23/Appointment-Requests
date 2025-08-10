@@ -19,7 +19,7 @@ const AppointmentCard = ({
     ...appointmentProps
 }: AppointmentCardProps) => {
     const appointment = { date_time, guest_name, guest_email, ...appointmentProps };
-    
+
     const { t } = useTranslation("componets/card/appointment-card");
 
     return (

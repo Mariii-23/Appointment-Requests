@@ -54,9 +54,7 @@ export default function LoginForm({ onSubmit, submitting, error }: LoginFormProp
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                 />
-                <div className="validator-hint">
-                    {t("email-validator")}
-                    </div>
+                <div className="validator-hint">{t("email-validator")}</div>
             </fieldset>
 
             <fieldset className="fieldset w-full">
@@ -71,9 +69,7 @@ export default function LoginForm({ onSubmit, submitting, error }: LoginFormProp
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                 />
-                <div className="validator-hint">
-                    {t("password-validator")}
-                    </div>
+                <div className="validator-hint">{t("password-validator")}</div>
             </fieldset>
 
             <button

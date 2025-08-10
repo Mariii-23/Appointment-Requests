@@ -20,8 +20,7 @@ export const AppointmentsHeader = ({
     disableNextPage,
     disablePreviosPage,
 }: PendingAppointmentsHeaderProps) => {
-
-    const {t} = useTranslation("components/header/pending_appointment")
+    const { t } = useTranslation("components/header/pending_appointment");
 
     return (
         <div className="flex flex-row justify-between mb-4">
@@ -37,14 +36,14 @@ export const AppointmentsHeader = ({
                         disabled={disablePreviosPage}
                         onClick={onPreviousPage}
                     >
-                        <ArrowLeftIcon />
+                        <ArrowLeftIcon color="black" />
                     </button>
                     <button
                         className="btn btn-outline"
                         disabled={disableNextPage}
                         onClick={onNextPage}
                     >
-                        <ArrowRigthIcon />
+                        <ArrowRigthIcon color="black" />
                     </button>
                 </div>
                 <button className="btn btn-outline">

@@ -1,10 +1,14 @@
 import { Fragment } from "react";
+import ArrowLeftIcon from "./icons/arrow-left";
+import ArrowRigthIcon from "./icons/arrow-rigth";
 
 interface PaginatorProps {
     totalPages: number;
     currentPage: number;
     onClickPage: (page: number) => void;
     pagesToShowEachSide?: number; // default = 3
+    onNextPage?: () => void;
+    onPreviousPage?: () => void;
 }
 
 const Paginator = ({
@@ -12,6 +16,8 @@ const Paginator = ({
     currentPage,
     onClickPage,
     pagesToShowEachSide = 3,
+    onNextPage,
+    onPreviousPage,
 }: PaginatorProps) => {
     const renderButton = (page: number) => (
         <button
@@ -49,6 +55,15 @@ const Paginator = ({
 
     return (
         <div className="join my-4">
+            <button
+                key="preview"
+                className="join-item btn p-4 px-3"
+                disabled={!onPreviousPage}
+                onClick={onPreviousPage}
+            >
+                <ArrowLeftIcon color="back" size={20} />
+            </button>
+
             {sortedPages.map((page, index) => {
                 const prev = sortedPages[index - 1];
                 const showEllipsis = prev && page - prev > 1;
@@ -62,6 +77,15 @@ const Paginator = ({
                     </Fragment>
                 );
             })}
+
+            <button
+                key="next"
+                className="join-item btn p-4 px-3"
+                disabled={!onNextPage}
+                onClick={onNextPage}
+            >
+                <ArrowRigthIcon color="black" size={20} />
+            </button>
         </div>
     );
 };

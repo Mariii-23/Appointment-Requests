@@ -30,7 +30,7 @@ export default function Home() {
 
     const { t } = useTranslation("common");
 
-  const {t: t_error_sucess} =useTranslation("errors_or_sucess");
+    const { t: t_error_sucess } = useTranslation("errors_or_sucess");
 
     const perPage = 2;
 
@@ -53,6 +53,10 @@ export default function Home() {
             page,
             per_page: perPage,
         }),
+    );
+
+    const totalPages = useSelector(
+        (state: RootState) => state.nutritionists.cache?.[pageKey]?.meta.total_pages ?? 0,
     );
 
     useEffect(() => {
@@ -131,7 +135,7 @@ export default function Home() {
             } else {
                 showAlert("error", resultAction.payload ?? "Error creating an appointment");
             }
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (_error) {
             showAlert("error", "Error creating an appointment.");
         }
@@ -144,7 +148,11 @@ export default function Home() {
             </BannerLayout>
             <BodyLayout>
                 {loading && <div>{capitalizeFirstLetter(t("loading"))}...</div>}
-                {error && <div className="text-red-600">{capitalizeFirstLetter(t("error"))}: {error}</div>}
+                {error && (
+                    <div className="text-red-600">
+                        {capitalizeFirstLetter(t("error"))}: {error}
+                    </div>
+                )}
 
                 {currentPageData && (
                     <>
@@ -159,13 +167,25 @@ export default function Home() {
                                 totalPages={currentPageData.meta.total_pages}
                                 currentPage={page}
                                 onClickPage={handlePageChange}
+                                onNextPage={
+                                    page == totalPages ? undefined : () => setPage(page + 1)
+                                }
+                                onPreviousPage={page == 1 ? undefined : () => setPage(page - 1)}
                             />
                         )}
                     </>
                 )}
 
-                <Modal ref={modalRef} title={capitalizeFirstLetter(t("appointment"))} onClose={closeModal}>
-                    <AppointmentForm ref={formRef} onSubmit={handleAppointmentSubmit} submitting={false} />
+                <Modal
+                    ref={modalRef}
+                    title={capitalizeFirstLetter(t("appointment"))}
+                    onClose={closeModal}
+                >
+                    <AppointmentForm
+                        ref={formRef}
+                        onSubmit={handleAppointmentSubmit}
+                        submitting={false}
+                    />
                 </Modal>
             </BodyLayout>
         </>

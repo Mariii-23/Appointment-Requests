@@ -17,14 +17,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body>
+            <body className="bg-background min-h-screen">
                 <I18NProvider>
-                <StoreProvider>
-                    <Navbar />
-                    <AlertProvider>
-                        {children}
-                    </AlertProvider>
-                </StoreProvider>
+                    <StoreProvider>
+                        <Navbar />
+                        <AlertProvider>{children}</AlertProvider>
+                    </StoreProvider>
                 </I18NProvider>
             </body>
         </html>

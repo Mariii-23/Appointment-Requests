@@ -8,5 +8,7 @@
     "appointment": "appointment",
     "website": "website",
     "followUp": "follow-up",
-    "welcome-back": "welcome back"
+    "welcome-back": "welcome back",
+    "loading": "loading",
+    "error": "error"
 }

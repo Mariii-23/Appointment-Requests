@@ -52,22 +52,18 @@ const NutritionistWithServiceCard = ({
                         onClick={() => onClickScheduleAppointmentHandler(id, selectedServiceId)}
                     >
                         <div className="flex flex-row gap-2">
-                            <div>
-                        {capitalizeFirstLetter(t("schedule"))}
-                            </div>
-                            <div>
-                        {capitalizeFirstLetter(t("appointment"))}
-</div>
+                            <div>{capitalizeFirstLetter(t("schedule"))}</div>
+                            <div>{capitalizeFirstLetter(t("appointment"))}</div>
                         </div>
                     </button>
-                    {onClickWebsiteHandler &&
-                    <button
-                        className="btn btn-primary-card btn-sm w-full"
-                        onClick={() => onClickWebsiteHandler(id)}
-                    >
-                        {capitalizeFirstLetter(t("website"))}
-                    </button>
-                    }
+                    {onClickWebsiteHandler && (
+                        <button
+                            className="btn btn-primary-card btn-sm w-full"
+                            onClick={() => onClickWebsiteHandler(id)}
+                        >
+                            {capitalizeFirstLetter(t("website"))}
+                        </button>
+                    )}
                 </div>
             </div>
 

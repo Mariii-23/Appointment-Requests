@@ -32,7 +32,7 @@ const NutritionistServiceSearch = ({ onSearch }: NutritionistServiceSearchProps)
                     type="text"
                     value={location}
                     onChange={e => setLocation(e.target.value)}
-                placeholder={t("location-place-holder")}
+                    placeholder={t("location-place-holder")}
                     className="pr-10"
                 />
                 <MapPinIcon />

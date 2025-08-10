@@ -1,5 +1,6 @@
 {
-    "areYouNutritionist": "Are you a nutrition professional? Get to know our software",
+    "areYouNutritionist": "Are you a nutrition professional?",
+    "knowOurSoftware": "Get to know our software",
     "welcome": "Welcome, {{name}}",
     "logout": "Logout"
 }

@@ -12,6 +12,7 @@ const ArrowRigthIcon: React.FC<IconProps> = ({
             xmlns="http://www.w3.org/2000/svg"
             strokeWidth={1.5}
             stroke={color}
+            fill={color}
             width={size}
             height={size}
             viewBox="0 0 640 640"

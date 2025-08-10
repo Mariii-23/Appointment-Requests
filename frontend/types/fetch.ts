@@ -39,9 +39,7 @@ export const extractApiErrors = (error: unknown): string | null => {
         }
 
         if (typeof errors === "object") {
-            return Object.values(errors)
-                .flat()
-                .join("\n");
+            return Object.values(errors).flat().join("\n");
         }
 
         return String(errors);
@@ -52,4 +50,4 @@ export const extractApiErrors = (error: unknown): string | null => {
     }
 
     return "Unknown error occurred";
-}
+};

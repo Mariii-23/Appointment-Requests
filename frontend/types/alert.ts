@@ -1,3 +1,3 @@
 export interface AlertProps {
-    title: string
+    title: string;
 }

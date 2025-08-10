@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
@@ -37,9 +37,9 @@ import pendingApproveHeaderEn from "@/app/locales/en/components/pending_appointm
 
 const resources = {
     en: {
-        "common": commonEn,
+        common: commonEn,
 
-        "errors_or_sucess": errorOrSucessEn,
+        errors_or_sucess: errorOrSucessEn,
 
         "components/navbar": navbarEn,
         "components/services_display": servicesDisplayEn,
@@ -52,12 +52,12 @@ const resources = {
 
         "componets/card/appointment-card": appointmentCardEn,
 
-        "components/header/pending_appointment": pendingApproveHeaderEn
+        "components/header/pending_appointment": pendingApproveHeaderEn,
     },
     pt: {
-        "common": commonPt,
+        common: commonPt,
 
-        "errors_or_sucess": errorOrSucessPt,
+        errors_or_sucess: errorOrSucessPt,
 
         "components/navbar": navbarPt,
         "components/services_display": servicesDisplayPt,
@@ -70,21 +70,19 @@ const resources = {
 
         "componets/card/appointment-card": appointmentCardPt,
 
-        "components/header/pending_appointment": pendingApproveHeaderPt
+        "components/header/pending_appointment": pendingApproveHeaderPt,
     },
 };
 
-i18n
-    .use(initReactI18next)
-    .init({
-        resources,
-        lng: "pt",
-        fallbackLng: "en",
-        interpolation: {
-            escapeValue: false,
-        },
-        ns: ["components"],
-        defaultNS: "components",
-    });
+i18n.use(initReactI18next).init({
+    resources,
+    lng: "pt",
+    fallbackLng: "en",
+    interpolation: {
+        escapeValue: false,
+    },
+    ns: ["components"],
+    defaultNS: "components",
+});
 
 export default i18n;

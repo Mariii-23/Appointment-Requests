@@ -6,7 +6,7 @@ export const formatDate = (isoString: string) => {
 
     const getOrdinal = (n: number) => {
         if (locale.startsWith("pt")) {
-            return ""
+            return "";
         } else {
             if (n > 3 && n < 21) return "th";
             switch (n % 10) {

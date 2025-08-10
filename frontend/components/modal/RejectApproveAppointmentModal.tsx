@@ -36,14 +36,14 @@ const RejectApproveAppointmentModal = forwardRef<HTMLDialogElement, Props>(
                         <div className="flex flex-col gap-2">
                             <p>
                                 <strong className="text-primary-green">
-                        {capitalizeFirstLetter(t("client"))}
-                                    :</strong>{" "}
+                                    {capitalizeFirstLetter(t("client"))}:
+                                </strong>{" "}
                                 {appointment.guest_name}
                             </p>
                             <p>
                                 <strong className="text-primary-green">
-                        {capitalizeFirstLetter(t("email"))}
-                                    :</strong>{" "}
+                                    {capitalizeFirstLetter(t("email"))}:
+                                </strong>{" "}
                                 {appointment.guest_email}
                             </p>
                         </div>

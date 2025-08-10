@@ -5,7 +5,7 @@ type BodyLayoutProps = {
 };
 
 const BodyLayout: React.FC<BodyLayoutProps> = ({ children }) => {
-    return <div className="p-16 pb-4">{children}</div>;
+    return <div className="p-12 pb-4">{children}</div>;
 };
 
 export default BodyLayout;

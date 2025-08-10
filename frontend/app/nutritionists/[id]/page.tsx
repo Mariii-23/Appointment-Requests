@@ -16,13 +16,13 @@ type NutritionistPageProps = {
     params: Promise<{ id: string }>;
 };
 
-const NutritionistPage = ({ params }: NutritionistPageProps)  => {
+const NutritionistPage = ({ params }: NutritionistPageProps) => {
     const dispatch = useDispatch<AppDispatch>();
 
-     const unwrappedParams = use(params);
-  const { id } = unwrappedParams;
+    const unwrappedParams = use(params);
+    const { id } = unwrappedParams;
 
-  const {t} =useTranslation("errors_or_sucess");
+    const { t } = useTranslation("errors_or_sucess");
 
     const modalRef = useRef<HTMLDialogElement>(null);
     const formRef = useRef<AppointmentFormHandle>(null);
@@ -35,13 +35,13 @@ const NutritionistPage = ({ params }: NutritionistPageProps)  => {
     const showAlert = useAlert();
 
     const selectedNutritionist = useSelector(
-        (state: RootState) => state.nutritionists.selectedNutritionist
+        (state: RootState) => state.nutritionists.selectedNutritionist,
     );
 
-  useEffect(() => {
-    dispatch({ type: "nutritionists/clearSelectedNutritionist" }); 
-    dispatch(fetchNutritionistById(id));
-  }, [dispatch, id]);
+    useEffect(() => {
+        dispatch({ type: "nutritionists/clearSelectedNutritionist" });
+        dispatch(fetchNutritionistById(id));
+    }, [dispatch, id]);
 
     const onClickScheduleAppointmentHandler = (nutricionId: string, serviceId: string) => {
         setServiceId(serviceId);
@@ -54,7 +54,7 @@ const NutritionistPage = ({ params }: NutritionistPageProps)  => {
         datetime: string;
     }) => {
         try {
-            console.log("id do gajo",id);
+            console.log("id do gajo", id);
             const resultAction = await dispatch(
                 createAppointment({
                     appointment: {
@@ -76,26 +76,30 @@ const NutritionistPage = ({ params }: NutritionistPageProps)  => {
             } else {
                 showAlert("error", resultAction.payload ?? "Error creating an appointment");
             }
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (_error) {
             showAlert("error", "Error creating an appointment.");
         }
     };
 
-  return (
-    <BodyLayout>
-        {selectedNutritionist &&
-        <NutritionistWithServiceCard
-            {...selectedNutritionist}
-            onClickScheduleAppointmentHandler={onClickScheduleAppointmentHandler}
-        />
-        }
+    return (
+        <BodyLayout>
+            {selectedNutritionist && (
+                <NutritionistWithServiceCard
+                    {...selectedNutritionist}
+                    onClickScheduleAppointmentHandler={onClickScheduleAppointmentHandler}
+                />
+            )}
 
-        <Modal ref={modalRef} title="Appointment" onClose={closeModal}>
-            <AppointmentForm ref={formRef} onSubmit={handleAppointmentSubmit} submitting={false} />
-        </Modal>
-    </BodyLayout>
-  );
-}
+            <Modal ref={modalRef} title="Appointment" onClose={closeModal}>
+                <AppointmentForm
+                    ref={formRef}
+                    onSubmit={handleAppointmentSubmit}
+                    submitting={false}
+                />
+            </Modal>
+        </BodyLayout>
+    );
+};
 
 export default NutritionistPage;

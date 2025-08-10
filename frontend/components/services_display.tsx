@@ -12,7 +12,7 @@ type ServicesDisplayProps = {
 
 const ServicesDisplay = ({ services, onServiceChange }: ServicesDisplayProps) => {
     const [selectedServiceId, setSelectedServiceId] = useState<string>(services[0]?.id || "");
-    const { t  } = useTranslation("components/services_display");
+    const { t } = useTranslation("components/services_display");
 
     const selectedService = useMemo(() => {
         return services.find(s => s.id == selectedServiceId);

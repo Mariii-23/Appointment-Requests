@@ -20,7 +20,7 @@ import useAlert from "@/hooks/useAlert";
 import { useTranslation } from "react-i18next";
 
 export default function NutritionistAppointmentsPage() {
-    const perPage = 6;
+    const perPage = 3;
     const initialAppointment = {
         id: "",
         guest_name: "",
@@ -30,7 +30,7 @@ export default function NutritionistAppointmentsPage() {
         date_time: "",
     };
 
-  const {t} =useTranslation("errors_or_sucess");
+    const { t } = useTranslation("errors_or_sucess");
 
     const showAlert = useAlert();
     const dispatch = useDispatch<AppDispatch>();
@@ -138,6 +138,7 @@ export default function NutritionistAppointmentsPage() {
                         <AppointmentCards
                             appointments={appointmentsData.data}
                             onAnswerRequestAppointmentClick={onAnswerRequestAppointmentClick}
+                            minAppointments={perPage}
                         />
                     )}
 
