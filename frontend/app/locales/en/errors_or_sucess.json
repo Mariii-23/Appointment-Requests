@@ -1,0 +1,14 @@
+{
+    "unknown-error": "Unknown error occurred",
+    "appointments": {
+        "create-appoinment": {
+            "sucess": "Appointment created with sucess!"
+        },
+        "approve-appoinment": {
+            "sucess": "Appointment accepted!\nThe customer has been notified."
+        },
+        "reject-appoinment": {
+            "sucess": "Appointment rejected!\nThe customer has been notified."
+        }
+    }
+}

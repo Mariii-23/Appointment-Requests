@@ -8,6 +8,7 @@ import BodyLayout from "@/app/layouts/body-layout";
 import {
     fetchAllAppointments,
     makePageKeyAppointments,
+    resetAppointmentsCache,
     updateAppointmentStatus,
 } from "@/store/appointments_slice";
 import AppointmentCards from "@/components/cards/appointment_cards";
@@ -16,6 +17,7 @@ import { Appointment, AppointmentStatus } from "@/types/appointment";
 import RejectApproveAppointmentModal from "@/components/modal/RejectApproveAppointmentModal";
 import AppointmentsHeader from "@/components/headers/PendingAppointmentsHeader";
 import useAlert from "@/hooks/useAlert";
+import { useTranslation } from "react-i18next";
 
 export default function NutritionistAppointmentsPage() {
     const perPage = 6;
@@ -27,6 +29,8 @@ export default function NutritionistAppointmentsPage() {
         status: AppointmentStatus.Pending,
         date_time: "",
     };
+
+  const {t} =useTranslation("errors_or_sucess");
 
     const showAlert = useAlert();
     const dispatch = useDispatch<AppDispatch>();
@@ -65,7 +69,10 @@ export default function NutritionistAppointmentsPage() {
     };
 
     const onRefresh = () => {
-        //TODO: voltar a fazer o pedido
+        dispatch(resetAppointmentsCache());
+        dispatch(
+            fetchAllAppointments({ page, per_page: perPage, status: AppointmentStatus.Pending }),
+        );
     };
 
     const previousPage = () => {
@@ -92,7 +99,7 @@ export default function NutritionistAppointmentsPage() {
             .then(() => {
                 closeModal();
                 setAppointmentSelected(initialAppointment);
-                showAlert("success", "Appointment accepted!\nEmail sent to client.");
+                showAlert("success", t("appointments.approve-appoinment.sucess"));
             })
             .catch(err => {
                 showAlert("error", err);
@@ -105,7 +112,7 @@ export default function NutritionistAppointmentsPage() {
             .then(() => {
                 closeModal();
                 setAppointmentSelected(initialAppointment);
-                showAlert("success", "Appointment rejected!\nEmail sent to client.");
+                showAlert("success", t("appointments.reject-appoinment.sucess"));
             })
             .catch(err => {
                 showAlert("error", err);

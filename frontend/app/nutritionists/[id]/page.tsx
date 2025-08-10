@@ -1,8 +1,6 @@
 "use client";
 
 import BodyLayout from "@/app/layouts/body-layout";
-import CardLayout from "@/app/layouts/card-layout";
-import Avatar from "@/components/avatar";
 import NutritionistWithServiceCard from "@/components/card/nutritionit_with_service_card";
 import AppointmentForm, { AppointmentFormHandle } from "@/components/forms/appointment_form";
 import Modal from "@/components/modal";
@@ -11,6 +9,7 @@ import { AppDispatch, RootState } from "@/store";
 import { createAppointment } from "@/store/appointments_slice";
 import { fetchNutritionistById } from "@/store/nutritionists_with_services_slice";
 import { useEffect, use, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 type NutritionistPageProps = {
@@ -22,6 +21,8 @@ const NutritionistPage = ({ params }: NutritionistPageProps)  => {
 
      const unwrappedParams = use(params);
   const { id } = unwrappedParams;
+
+  const {t} =useTranslation("errors_or_sucess");
 
     const modalRef = useRef<HTMLDialogElement>(null);
     const formRef = useRef<AppointmentFormHandle>(null);
@@ -71,7 +72,7 @@ const NutritionistPage = ({ params }: NutritionistPageProps)  => {
             if (createAppointment.fulfilled.match(resultAction)) {
                 formRef.current?.reset();
 
-                showAlert("success", "Appointment created with sucess!");
+                showAlert("success", t("appointments.create-appoinment.sucess"));
             } else {
                 showAlert("error", resultAction.payload ?? "Error creating an appointment");
             }

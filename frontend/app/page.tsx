@@ -30,6 +30,8 @@ export default function Home() {
 
     const { t } = useTranslation("common");
 
+  const {t: t_error_sucess} =useTranslation("errors_or_sucess");
+
     const perPage = 2;
 
     const [page, setPage] = useState(1);
@@ -125,7 +127,7 @@ export default function Home() {
             if (createAppointment.fulfilled.match(resultAction)) {
                 formRef.current?.reset();
 
-                showAlert("success", "Appointment created with sucess!");
+                showAlert("success", t_error_sucess("appointments.create-appoinment.sucess"));
             } else {
                 showAlert("error", resultAction.payload ?? "Error creating an appointment");
             }

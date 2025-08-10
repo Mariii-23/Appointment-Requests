@@ -86,7 +86,7 @@ export const createAppointment = createAsyncThunk<
         }
     } catch (error: unknown) {
         const extracted = extractApiErrors(error);
-        return thunkAPI.rejectWithValue(extracted ?? "Unknown error occurred");
+        return thunkAPI.rejectWithValue(extracted ?? "unknow-error");
     }
 });
 
@@ -167,6 +167,6 @@ const appointmentsSlice = createSlice({
     },
 });
 
-export const { resetCache } = appointmentsSlice.actions;
+export const { resetCache: resetAppointmentsCache } = appointmentsSlice.actions;
 export default appointmentsSlice.reducer;
 export { makePageKeyAppointments };

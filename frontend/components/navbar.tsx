@@ -49,7 +49,7 @@ const Navbar = () => {
             ) : (
                 <div className="flex items-center space-x-4 text-white text-sm">
                     <span>{t("welcome", { name: nutritionist.name })}</span>
-                    <button className="btn btn-terciary" onClick={handleLogout}>
+                    <button className="btn btn-ghost" onClick={handleLogout}>
                         {t("logout")}
                     </button>
                 </div>

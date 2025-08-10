@@ -16,9 +16,9 @@ ActiveRecord::Base.transaction do
       nutritionist.password_confirmation = DEFAULT_PASSWORD
     end
 
-    puts "Creating 3 fixed services for admin nutritionist..."
+    puts "Creating 4 fixed services for admin nutritionist..."
 
-    (3 - admin.services.count).times do
+    (4 - admin.services.count).times do
         admin.services.create!(
           name: Faker::Commerce.product_name,
           price_euros: rand(MIN_PRICE_CENTS..MAX_PRICE_CENTS),

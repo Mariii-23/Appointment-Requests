@@ -1,0 +1,14 @@
+{
+    "unknown-error": "Um erro desconhecido aconteceu",
+    "appointments": {
+        "create-appoinment": {
+            "sucess": "Marcação marcada com sucesso!"
+        },
+        "approve-appoinment": {
+            "sucess": "Marcação aprovada!\nO cliente foi notificado."
+        },
+        "reject-appoinment": {
+            "sucess": "Marcação rejeitada!\nO cliente foi notificado."
+        }
+    }
+}

@@ -9,6 +9,9 @@ import navbarPt from "@/app/locales/pt/components/navbar.json";
 import commonEn from "@/app/locales/en/common.json";
 import commonPt from "@/app/locales/pt/common.json";
 
+import errorOrSucessEn from "@/app/locales/en/errors_or_sucess.json";
+import errorOrSucessPt from "@/app/locales/pt/errors_or_sucess.json";
+
 import servicesDisplayPt from "@/app/locales/pt/components/services_display.json";
 import servicesDisplayEn from "@/app/locales/en/components/services_display.json";
 
@@ -35,6 +38,9 @@ import pendingApproveHeaderEn from "@/app/locales/en/components/pending_appointm
 const resources = {
     en: {
         "common": commonEn,
+
+        "errors_or_sucess": errorOrSucessEn,
+
         "components/navbar": navbarEn,
         "components/services_display": servicesDisplayEn,
         "components/nutritionist_service_search": nutritionistServiceSearchEn,
@@ -50,6 +56,9 @@ const resources = {
     },
     pt: {
         "common": commonPt,
+
+        "errors_or_sucess": errorOrSucessPt,
+
         "components/navbar": navbarPt,
         "components/services_display": servicesDisplayPt,
         "components/nutritionist_service_search": nutritionistServiceSearchPt,
