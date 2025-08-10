@@ -7,11 +7,12 @@ import { PATHS } from "@/constants/paths";
 import { logout } from "@/store/authSlice";
 import type { RootState, AppDispatch } from "@/store";
 import { useTranslation } from "react-i18next";
+import LanguageSelector from "./language_selector";
 
 const Navbar = () => {
     const router = useRouter();
     const dispatch = useDispatch<AppDispatch>();
-    const { t , i18n} = useTranslation("components/navbar");
+    const { t } = useTranslation("components/navbar");
 
     const nutritionist = useSelector((state: RootState) => state.auth.nutritionist);
 
@@ -20,10 +21,6 @@ const Navbar = () => {
         router.push(PATHS.HOME);
     };
 
-      const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    i18n.changeLanguage(e.target.value);
-  };
-
     return (
         <div className="bg-gradient-to-r from-terciary-green via-secondary-green to-primary-green transition-colors duration-500 ease-in-out flex items-center justify-between px-8 py-4">
             <div className="flex items-center space-x-2 text-white font-semibold text-sm" onClick={() => router.push(PATHS.HOME)}>
@@ -31,6 +28,7 @@ const Navbar = () => {
             </div>
 
             <div className="flex gap-2">
+            <LanguageSelector/>
             {!nutritionist ? (
                 <a
                     className="text-white text-sm font-light flex items-center space-x-1 hover:underline"
@@ -56,15 +54,7 @@ const Navbar = () => {
                     </button>
                 </div>
             )}
-  <select
-        onChange={handleLanguageChange}
-        value={i18n.language}
-        className="ml-4 rounded bg-white text-black p-1"
-        aria-label={t("select_language")}
-      >
-        <option value="en">English</option>
-        <option value="pt">Português</option>
-    </select>
+
 </div>
         </div>
     );
