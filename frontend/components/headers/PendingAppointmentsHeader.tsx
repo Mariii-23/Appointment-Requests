@@ -43,7 +43,7 @@ export const AppointmentsHeader = ({
                         <ArrowRigthIcon />
                     </button>
                 </div>
-                <button className="btn btn-outline" onClick={() => alert("TODO: Share nodes")}>
+                <button className="btn btn-outline">
                     <ShareNodesIcon />
                 </button>
                 <button className="btn btn-outline" onClick={onRefresh}>

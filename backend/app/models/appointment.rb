@@ -7,6 +7,7 @@ class Appointment < ApplicationRecord
   validates :guest_name, :guest_email, :date_time, presence: true
 
   validate :only_one_pending_per_guest, on: :create
+  validate :date_cannot_be_in_the_past, on: :create
 
   # Custom validation to ensure a guest cannot have more than one pending appointment request at the same time.
   # This validation is placed in the model to enforce the business rule consistently across the entire application,
@@ -15,6 +16,12 @@ class Appointment < ApplicationRecord
   def only_one_pending_per_guest
     if Appointment.where(status: "pending", guest_email: guest_email).exists?
       errors.add(:base, "You already have a pending request.")
+    end
+  end
+
+  def date_cannot_be_in_the_past
+    if date_time.present? && date_time < Time.current
+      errors.add(:date_time, "The pending request cannot be in the past.")
     end
   end
 end
