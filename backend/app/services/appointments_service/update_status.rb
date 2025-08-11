@@ -43,15 +43,20 @@ module AppointmentsService
     private
 
     def reject_conflicting_appointments
-      nutritionist_id = @appointment.service.nutritionist_id
-      time = @appointment.date_time
+      conflicts = Appointment.where(status: "pending")
+                             .joins(service: :nutritionist)
+                             .where(services: { nutritionist_id: @appointment.service.nutritionist_id })
+                             .where(date_time: @appointment.date_time)
+                             .where.not(id: @appointment.id)
 
-      Appointment.where(status: "pending")
-                 .joins(service: :nutritionist)
-                 .where(services: { nutritionist_id: nutritionist_id })
-                 .where(date_time: time)
-                 .where.not(id: @appointment.id)
-                 .update_all(status: "rejected")
+      conflicts.find_each do |conflict|
+        conflict.update!(status: "rejected")
+        begin
+          MailService::AppointmentNotificationService.send_status_update_email(conflict)
+        rescue => e
+          Rails.logger.error("Failed to send status update email for conflict #{conflict.id}: #{e.message}")
+        end
+      end
     end
   end
 end
