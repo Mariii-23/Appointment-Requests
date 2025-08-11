@@ -29,7 +29,22 @@
 
 ## How to Run the Application
 
+You can use the `Makefile` at the project root to quickly start the application:
+
+```bash
+make backend-up   # Installs dependencies, sets up the DB, and starts the backend server
+make backend-seed # Installs dependencies, sets up the DB, and seeds it with initial data
+make frontend-up  # Installs dependencies and starts the frontend server
+```
+
 ### Backend
+
+- First setp
+
+```bash
+bundle install
+```
+
 - Database setup (`make db-up`, `make db-seed`, etc)
 ```bash
 make db-up    # to create and migrate the database
