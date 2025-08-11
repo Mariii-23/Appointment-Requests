@@ -21,6 +21,7 @@ import { PATHS } from "@/constants/paths";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { capitalizeFirstLetter } from "@/utils/common";
+import Loading from "@/components/loading";
 
 export default function Home() {
     const dispatch = useDispatch<AppDispatch>();
@@ -151,7 +152,11 @@ export default function Home() {
                 <NutritionistServiceSearch onSearch={onSearch} />
             </BannerLayout>
             <BodyLayout>
-                {loading && <div>{capitalizeFirstLetter(t("loading"))}...</div>}
+                {loading && (
+                    <div className="w-full  flex justify-center items-center">
+                        <Loading />
+                    </div>
+                )}
 
                 {currentPageData && (
                     <>

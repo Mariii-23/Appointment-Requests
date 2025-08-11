@@ -18,6 +18,7 @@ import RejectApproveAppointmentModal from "@/components/modal/RejectApproveAppoi
 import AppointmentsHeader from "@/components/headers/PendingAppointmentsHeader";
 import useAlert from "@/hooks/useAlert";
 import { useTranslation } from "react-i18next";
+import Loading from "@/components/loading";
 
 export default function NutritionistAppointmentsPage() {
     const perPage = 3;
@@ -135,7 +136,11 @@ export default function NutritionistAppointmentsPage() {
                         disablePreviosPage={page == 1}
                     />
 
-                    {loading && <div>Loading...</div>}
+                    {loading && (
+                        <div className="w-full  flex justify-center items-center">
+                            <Loading />
+                        </div>
+                    )}
 
                     {appointmentsData && (
                         <AppointmentCards
