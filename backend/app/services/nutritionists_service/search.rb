@@ -11,48 +11,48 @@ module NutritionistsService
       @services_limit = services_limit.to_i
     end
 
+    def filtered_services_for(nutritionist)
+      services_scope = nutritionist.services
+      services_scope = services_scope.where("location ILIKE ?", "%#{@location}%") if @location.present?
+        
+      if @query.present? && !nutritionist.name.downcase.include?(@query_downcase)
+        services_scope = services_scope.where("name ILIKE ?", "%#{@query}%")
+      end
+    
+      services_scope.limit(@services_limit)
+    end
+    
     def call
-      base_relation = Nutritionist.joins(:services)
-
+      @query_downcase = @query.to_s.downcase
+    
+      base_relation = Nutritionist.joins(:services).distinct
+    
       if @query.present?
         base_relation = base_relation.where("nutritionists.name ILIKE :q OR services.name ILIKE :q", q: "%#{@query}%")
       end
-
-      base_relation = base_relation.distinct
-
-      paginator = Pagination.new(base_relation, page: @page, per_page: @per_page)
-      nutritionists = paginator.result[:data].select(:id, :name, :email)
-
+    
+      if @location.present?
+        base_relation = base_relation.where("services.location ILIKE ?", "%#{@location}%")
+      end
+    
+      paginator = Pagination.new(base_relation.select(:id, :name, :email), page: @page, per_page: @per_page)
+      nutritionists = paginator.result[:data]
+    
       if @include_services
         nutritionists = nutritionists.map do |nutritionist|
-          if @query.present?
-            if nutritionist.name.downcase.include?(@query.downcase)
-              services_scope = nutritionist.services
-              services_scope = services_scope.where("services.location ILIKE ?", "%#{@location}%") if @location.present?
-            else
-              services_scope = nutritionist.services.where("services.name ILIKE ?", "%#{@query}%")
-              services_scope = services_scope.where("services.location ILIKE ?", "%#{@location}%") if @location.present?
-            end
-          else
-            services_scope = nutritionist.services
-            services_scope = services_scope.where("services.location ILIKE ?", "%#{@location}%") if @location.present?
-          end
-        
-          services = services_scope.limit(@services_limit)
-        
-          nutritionist.as_json.merge(
-            services: services.map { |s| s.slice(:id, :name, :price_euros, :location) }
-          )
+          services = filtered_services_for(nutritionist).map { |s| s.slice(:id, :name, :price_euros, :location) }
+          nutritionist.as_json.merge(services: services)
         end
       
         nutritionists = nutritionists.select { |n| n[:services].any? }
       end
-
+    
       Result.ok(paginator.result.merge(data: nutritionists))
     rescue => e
       Rails.logger.error("NutritionistsService::Search failed: #{e.message}")
       Result.errors([SOMETHING_WENT_WRONG])
     end
+
 
     def self.call(nutritionistOrServiceName:, location: nil, page: nil, per_page: nil, include_services: false, services_limit: 10)
       new(

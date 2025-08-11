@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     fetchNutritionists,
     makePageKeyNutritionists,
+    resetCache,
 } from "@/store/nutritionists_with_services_slice";
 import Paginator from "@/components/paginator";
 import { NutritionistWithServices } from "@/types/nutritionist_with_service";
@@ -86,7 +87,7 @@ export default function Home() {
                 per_page: perPage,
             }),
         );
-    }, [dispatch, pageKey, search, location, page, perPage]);
+    }, [dispatch, search, location, page, perPage]);
 
     const onSearch = (newSearch: string, newLocation: string) => {
         setSearch(newSearch);
