@@ -64,6 +64,10 @@ export default function NutritionistAppointmentsPage() {
         );
     }, [dispatch, page, perPage]);
 
+    useEffect(() => {
+        if (error) showAlert("error", error);
+    }, [error, showAlert]);
+
     const handlePageChange = (newPage: number) => {
         setPage(newPage);
     };
@@ -132,7 +136,6 @@ export default function NutritionistAppointmentsPage() {
                     />
 
                     {loading && <div>Loading...</div>}
-                    {error && <div className="text-red-600">Error: {error}</div>}
 
                     {appointmentsData && (
                         <AppointmentCards

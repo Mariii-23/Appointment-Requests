@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     fetchNutritionists,
     makePageKeyNutritionists,
-    resetCache,
 } from "@/store/nutritionists_with_services_slice";
 import Paginator from "@/components/paginator";
 import { NutritionistWithServices } from "@/types/nutritionist_with_service";
@@ -89,6 +88,10 @@ export default function Home() {
         );
     }, [dispatch, search, location, page, perPage]);
 
+    useEffect(() => {
+        if (error) showAlert("error", error);
+    }, [error, showAlert]);
+
     const onSearch = (newSearch: string, newLocation: string) => {
         setSearch(newSearch);
         setLocation(newLocation);
@@ -149,11 +152,6 @@ export default function Home() {
             </BannerLayout>
             <BodyLayout>
                 {loading && <div>{capitalizeFirstLetter(t("loading"))}...</div>}
-                {error && (
-                    <div className="text-red-600">
-                        {capitalizeFirstLetter(t("error"))}: {error}
-                    </div>
-                )}
 
                 {currentPageData && (
                     <>

@@ -54,7 +54,6 @@ const NutritionistPage = ({ params }: NutritionistPageProps) => {
         datetime: string;
     }) => {
         try {
-            console.log("id do gajo", id);
             const resultAction = await dispatch(
                 createAppointment({
                     appointment: {
