@@ -2,5 +2,6 @@
     "areYouNutritionist": "É um profissional de nutrição?",
     "knowOurSoftware": "Conheça o nosso software",
     "welcome": "Bem-vindo, {{name}}",
-    "logout": "Sair"
+    "logout": "Sair",
+    "dashboard": "Dashboard"
 }

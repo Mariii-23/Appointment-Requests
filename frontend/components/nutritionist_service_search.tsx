@@ -18,7 +18,7 @@ const NutritionistServiceSearch = ({ onSearch }: NutritionistServiceSearchProps)
     };
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-row gap-4 w-full max-w-full">
+        <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4 w-full max-w-full">
             <input
                 type="text"
                 value={search}

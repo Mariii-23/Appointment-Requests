@@ -22,6 +22,10 @@ const Navbar = () => {
         router.push(PATHS.HOME);
     };
 
+    const handleLGoToDashboard = () => {
+        router.push(PATHS.NUTRITIONISTS_DASHBOARD);
+    };
+
     return (
         <div className="bg-gradient-to-r from-terciary-green via-secondary-green to-primary-green transition-colors duration-500 ease-in-out flex items-center justify-between px-8 py-4">
             <div
@@ -45,6 +49,9 @@ const Navbar = () => {
                 ) : (
                     <div className="flex items-center space-x-4 text-white text-sm">
                         <span>{t("welcome", { name: nutritionist.name })}</span>
+                        <button className="btn btn-ghost" onClick={handleLGoToDashboard}>
+                            {t("dashboard")}
+                        </button>
                         <button className="btn btn-ghost" onClick={handleLogout}>
                             {t("logout")}
                         </button>

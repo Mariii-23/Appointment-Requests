@@ -23,7 +23,7 @@ export const AppointmentsHeader = ({
     const { t } = useTranslation("components/header/pending_appointment");
 
     return (
-        <div className="flex flex-row justify-between mb-4">
+        <div className="flex flex-col gap-4 md:flex-row justify-between mb-4">
             <div>
                 <h1 className="text-xl font-bold">{t("title")}</h1>
                 <h6 className="text-sm text-gray-600">{t("subtitle")}</h6>

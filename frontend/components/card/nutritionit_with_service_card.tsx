@@ -31,8 +31,8 @@ const NutritionistWithServiceCard = ({
 
     return (
         <CardLayout>
-            <div className="flex flex-row justify-between w-full">
-                <div className="flex flex-colom gap-8">
+            <div className="flex flex-col md:flex-row justify-between w-full gap-4">
+                <div className="flex gap-8">
                     <div>
                         <Avatar name={name} />
                     </div>
@@ -46,7 +46,7 @@ const NutritionistWithServiceCard = ({
                     </div>
                 </div>
 
-                <div className="card-actions justify-between w-100">
+                <div className="card-actions justify-between w-full md:w-100">
                     <button
                         className="btn btn-secondary-card btn-sm w-full"
                         onClick={() => onClickScheduleAppointmentHandler(id, selectedServiceId)}

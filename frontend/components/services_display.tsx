@@ -28,7 +28,7 @@ const ServicesDisplay = ({ services, onServiceChange }: ServicesDisplayProps) =>
     if (!selectedService) return null;
 
     return (
-        <div className="flex flex-row justify-between items-center w-full ">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center w-full ">
             <div className="flex flex-row gap-2">
                 <MapPinIcon />
                 <div className="flex flex-col gap-4">
