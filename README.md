@@ -19,7 +19,17 @@
      EDITOR=nvim bin/rails credentials:edit
      ```
 
-     Then add the key `jwt_secret: "your_super_secure_key_here"` inside the credentials file.
+     Then add the key ``jwt_secret: "your_super_secure_key_here"`` inside the credentials file.
+
+    ```bash
+    jwt_secret: "your_super_secure_key_here"
+    ```
+
+    If it says “Unable to decrypt config/credentials.yml.enc. Perhaps you entered the wrong key?”
+
+    Run:
+
+    > rm config/credentials.yml.enc config/master.key
 
 - **Frontend:**
   1. Copy the environment example file:
@@ -58,7 +68,7 @@ make db-seed  # to seeds the database
 
 #### Seeds the database
 ```bash
-make db-seed  
+make db-seed
 ```
 
 Seeds the database with initial data, including:
@@ -161,7 +171,7 @@ GET /appointments?page=2&per_page=10
 
 #### State Management & Caching
 - Implemented using **Redux Toolkit** with slices dedicated to key entities (e.g., `appointments`, `services`).
-- Pagination-aware caching strategy:  
+- Pagination-aware caching strategy:
   - Each fetched page is stored in the state, indexed by a combination of `page` and `per_page`.
   - When navigating between pages, the app first checks the cache before making a new API request.
   - Cache entries can be manually invalidated through specific slice reducers (e.g., `resetCache`).
